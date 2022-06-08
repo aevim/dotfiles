@@ -51,7 +51,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[M]",      monocle },
+	{ "[Ꙫ]",      monocle },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
@@ -77,6 +77,8 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
 static const char *voldown[] = {"volume.sh", "down", NULL}; 
+static const char *closepop[] = {"dunstctl", "close-all", NULL}; 
+static const char *pymor[] = {"pymor", "-p", "20", "-l", "3", NULL}; 
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -87,6 +89,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_u,      spawn,          {.v = volup } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pymor } },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = closepop } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_w,      tabmode,        {-1} },
 	{ MODKEY,                       XK_n,      focusstack,     {.i = +1 } },
