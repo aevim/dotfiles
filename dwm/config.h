@@ -40,7 +40,7 @@ static const Rule rules[] = {
   /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
   { "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
   { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        50,50,500,500,        5 },
-	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        100,0,500,300,        5, 's' },
+	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 };
 
 /* layout(s) */
@@ -75,6 +75,8 @@ static const char *termcmd[]  = { "st", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
+static const char *volup[] = {"volume.sh", "up", NULL}; 
+static const char *voldown[] = {"volume.sh", "down", NULL}; 
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -83,6 +85,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY2,                      XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY|ShiftMask,             XK_u,      spawn,          {.v = volup } },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_w,      tabmode,        {-1} },
 	{ MODKEY,                       XK_n,      focusstack,     {.i = +1 } },
@@ -93,7 +97,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_space,  view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_1,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_2,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_3,      setlayout,      {.v = &layouts[2]} },
