@@ -64,6 +64,14 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY2,                      KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define STACKKEYS(MOD,ACTION) \
+	{ MOD, XK_n,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_p,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_b,     ACTION##stack, {.i = PREVSEL } }, \
+	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
+	{ MOD, XK_e,     ACTION##stack, {.i = 1 } }, \
+	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
+	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -90,10 +98,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pymor } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = closepop } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_w,      tabmode,        {-1} },
-	{ MODKEY,                       XK_n,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_p,      focusstack,     {.i = -1 } },
+  STACKKEYS(MODKEY,                          focus)
+  STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_m,      incnmaster,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_h,      setmfact,       {.f = -0.05} },
@@ -106,6 +114,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_3,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_9,      setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -120,7 +129,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_j,                      5)
 	TAGKEYS(                        XK_k,                      6)
 	TAGKEYS(                        XK_l,                      7)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  { MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
 };
 
 /* button definitions */
