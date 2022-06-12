@@ -16,17 +16,17 @@ static const int topbar             = 1;     /* 0 means bottom bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab     = showtab_auto;        /* Default tab bar show mode */
 static const int toptab        = True;               /* False means bottom tab bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char *fonts[]          = { "Monoid Nerd Font Mono:size=12" };
+static const char dmenufont[]       = "Monoid Nerd Font Mono:size=12";
+static const char bg[]       = "#282a36";
+static const char bg2[]      = "#44475a";
+static const char fg[]       = "#f8f8f2";
+static const char fg2[]      = "#8be9fd";
+static const char option[]   = "#ff79c6";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeNorm] = { fg,        bg,       option },
+	[SchemeSel]  = { fg2,       bg2,      bg2  },
 };
 
 /* tagging */
@@ -39,7 +39,9 @@ static const Rule rules[] = {
 	 */
   /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
   { "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
-  { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        50,50,500,500,        5 },
+  { "firefox",  NULL,       NULL,       1 << 1,       0,           -1,        50,50,500,500,        5 },
+  { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        100,50,1200,640,        5 },
+  { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 };
 
@@ -78,7 +80,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg, "-sb", bg2, "-sf", fg2, NULL };
 static const char *termcmd[]  = { "st", "-A 100", NULL };
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
