@@ -30,7 +30,13 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-	"st", NULL,
+  "hsetroot", "-solid", "#282a36", NULL,
+  "xrandr", "--output", "VGA-1", "--gamma", "1.0:0.88:0.90", "--brightness", "0.95", NULL,
+  "dunst", NULL,
+  "unclutter", NULL,
+  "run_xidlehook", NULL,
+  "safeeyes", NULL,
+  "xcape", "-e", "Control_L=Escape", NULL,
 	NULL /* terminate */
 };
 
