@@ -29,6 +29,11 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { fg2,       bg2,      bg2  },
 };
 
+static const char *const autostart[] = {
+	"st", NULL,
+	NULL /* terminate */
+};
+
 /* tagging */
 static const char *tags[] = { "a", "s", "d", "f", "h", "j", "k", "l" };
 
@@ -40,7 +45,7 @@ static const Rule rules[] = {
   /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
   { "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
   { "firefox",  NULL,       NULL,       1 << 1,       0,           -1,        50,50,500,500,        5 },
-  { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        50,50,1100,600,        5 },
+  { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        100,50,1200,640,        5 },
   { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 };
