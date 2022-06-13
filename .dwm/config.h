@@ -51,8 +51,10 @@ static const Rule rules[] = {
   /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
   { "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
   { "firefox",  NULL,       NULL,       1 << 1,       0,           -1,        50,50,500,500,        5 },
+  { "qutebrowser",  NULL,   NULL,       1 << 1,       0,           -1,        50,50,500,500,        0 },
   { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        100,50,1200,640,        5 },
   { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
+  { "wikiman",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 };
 
@@ -64,7 +66,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[Ꙫ]",      monocle },
+	{ "[↹]",      monocle },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
@@ -91,13 +93,14 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg, "-sb", bg2, "-sf", fg2, NULL };
-static const char *termcmd[]  = { "st", "-A 100", NULL };
+static const char *dmenucmd[] = { "dmenu_run_history", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg, "-sb", bg2, "-sf", fg2, NULL };
+static const char *termcmd[]  = { "st", NULL };
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL}; 
+static const char *scratchpadcmd[] = {"s", "st", "-A", "0.5", "-t", "scratchpad", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
 static const char *voldown[] = {"volume.sh", "down", NULL}; 
 static const char *closepop[] = {"dunstctl", "close-all", NULL}; 
+static const char *wikiman[] = { "st", "-A", "0.9", "-c", "wikiman", "-e", "wikiman", NULL}; 
 static const char *pymor[] = {"pymor", "-p", "20", "-l", "3", NULL}; 
 
 static Key keys[] = {
@@ -111,6 +114,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pymor } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = closepop } },
+	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = wikiman } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_w,      tabmode,        {-1} },
   STACKKEYS(MODKEY,                          focus)
