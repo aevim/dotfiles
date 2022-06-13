@@ -1,0 +1,140 @@
+#+TITLE: Qutebrowser config
+#+PROPERTY: header-args :tangle config.py
+#+STARTUP: overview
+
+* Theme
+I'm using dracula theme.
+#+begin_src python
+import dracula.draw
+
+# Load existing settings made via :set
+config.load_autoconfig()
+
+dracula.draw.blood(c, {
+    'spacing': {
+        'vertical': 6,
+        'horizontal': 8
+    }
+})
+
+#+end_src
+
+* Browser preferrences
+For a better adblock experience download the Brave adblock using *sudo pacman -S python-adblock*. Not all Youtube videos will have ads blocked, some ads will still appear. Using mpv as Youtube player is a better option. See the keybindings bellow for a how to do it. You'll have to download *youtube-dl* for this to work. An alternative for *youtube-dl* is *yt-dlp* which, in my experience, is better. To use it as your *youtube-dl* alternative, what I did was to create an symbolic link to /usr/bin/ with *youtube-dl* as the name, since, for me, was not working. For that: *sudo ln -s ~/.local/bin/yt-dlp /usr/bin/youtube-dl*
+#+begin_src python
+# Background color for webpages if unset (or empty to use the theme's color).
+c.colors.webpage.bg = 'black'
+
+## Render all web contents using a dark theme. Example configurations
+## from Chromium's `chrome://flags`:  - "With simple HSL/CIELAB/RGB-based
+## inversion": Set   `colors.webpage.darkmode.algorithm` accordingly.  -
+## "With selective image inversion": Set
+## `colors.webpage.darkmode.policy.images` to `smart`.  - "With selective
+## inversion of non-image elements": Set
+## `colors.webpage.darkmode.threshold.text` to 150 and
+## `colors.webpage.darkmode.threshold.background` to 205.  - "With
+## selective inversion of everything": Combines the two variants   above.
+## Type: Bool
+c.colors.webpage.darkmode.enabled = True
+
+## Possible values are: auto, light and dark.
+c.colors.webpage.preferred_color_scheme = 'dark'
+
+## Automatically start playing `<video>` elements. Note: On Qt < 5.11,
+## this option needs a restart and does not support URL patterns.
+## Type: Bool
+c.content.autoplay = False
+
+## Limit fullscreen to the browser window (does not expand to fill the
+## screen).
+## Type: Bool
+c.content.fullscreen.window = True
+
+## Allow websites to request geolocations.
+## Type: BoolAsk
+## Valid values:
+##   - true
+##   - false
+##   - ask
+c.content.geolocation = False
+
+## User agent to send.  The following placeholders are defined:  *
+## `{os_info}`: Something like "X11; Linux x86_64". * `{webkit_version}`:
+## The underlying WebKit version (set to a fixed value   with
+## QtWebEngine). * `{qt_key}`: "Qt" for QtWebKit, "QtWebEngine" for
+## QtWebEngine. * `{qt_version}`: The underlying Qt version. *
+## `{upstream_browser_key}`: "Version" for QtWebKit, "Chrome" for
+## QtWebEngine. * `{upstream_browser_version}`: The corresponding
+## Safari/Chrome version. * `{qutebrowser_version}`: The currently
+## running qutebrowser version.  The default value is equal to the
+## unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
+## read from JavaScript is always the global value. With QtWebEngine
+## between 5.12 and 5.14 (inclusive), changing the value exposed to
+## JavaScript requires a restart.
+## Type: FormatString
+c.content.headers.user_agent = 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'
+
+## Allow websites to show notifications.
+## Type: BoolAsk
+## Valid values:
+##   - true
+##   - false
+##   - ask
+c.content.notifications.enabled = False
+
+c.content.blocking.method = 'adblock'
+c.content.blocking.adblock.lists = []
+
+# Duration (in milliseconds) to wait before removing finished downloads.
+# If set to -1, downloads are never removed.
+c.downloads.remove_finished = 3
+
+# Set font.
+c.fonts.default_family = ['FantasqueSansMono Nerd Font']
+
+# Font size
+c.fonts.default_size = '16pt'
+
+# When to show the statusbar.
+# Valid values:
+#   - always: Always show the statusbar.
+#   - never: Always hide the statusbar.
+#   - in-mode: Show the statusbar when in modes other than normal mode.
+c.statusbar.show = 'in-mode'
+
+# When to show the tab bar.
+# Valid values:
+#   - always: Always show the tab bar.
+#   - never: Always hide the tab bar.
+#   - multiple: Hide the tab bar if only one tab is open.
+#   - switching: Show the tab bar when switching tabs.
+c.tabs.show = 'switching'
+
+# Search engine shortcuts. Ex: 'aw' is used to open a page on arch linux. aw<space><word/sentences>
+c.url.searchengines = {'DEFAULT': 'search.brave.com/search?q={}',  'go': 'https://www.google.com/search?hl=en&q={}', "aw": "https://wiki.archlinux.org/?search={}", 'wk': "https://www.wikipedia.org/w/index.php?title=Special:Search&search={}", 'mdn': "https://developer.mozilla.org/en-US/search?q={}", 'swk': 'https://simple.wikipedia.org/wiki/{}'}
+
+# Page(s) to open at the start.
+c.url.start_pages = ['search.brave.com']
+#+end_src
+
+* Bindings
+#+begin_src python
+## Bindings for normal mode
+config.bind(',i', 'zoom-in')
+config.bind(',o', 'zoom-out')
+config.bind('S', 'config-source')
+
+# This help to fix youtube scrolling problem
+config.bind('j', 'scroll-px 0 30')
+config.bind('k', 'scroll-px 0 -30')
+
+# This will reload greasemonkey plugins
+config.bind(',g', 'greasemonkey-reload')
+
+## mpv bidings
+# This I use if I'm already inside the video page.
+config.bind(',m', 'spawn mpv --force-window=immediate --pause {url}')
+
+# This, if I'm not on the video page, but I want to select the video, like using 'f', and to open it on mpv.
+config.bind('M', 'hint links spawn mpv --force-window=immediate --pause {hint-url}')
+#+end_src
