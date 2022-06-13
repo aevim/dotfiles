@@ -13,7 +13,18 @@ if [ -f $HOME/.aliases ]; then
 fi
 
 export PATH=$PATH:$HOME/.bin
+export EDITOR=vim
+export VISUAL=vim
+export PF_INFO="ascii kernel pkgs memory editor shell"
 
 set -o vi
+
+man() {
+  /usr/bin/man $* | \
+    col -b | \
+    vim -R -c 'set ft=man nomod nolist' -
+}
+
+shopt -s autocd
 
 alias ls='ls --color=auto'
