@@ -33,6 +33,7 @@ static const char *const autostart[] = {
   "hsetroot", "-solid", "#282a36", NULL,
   "xrandr", "--output", "VGA-1", "--gamma", "1.0:0.88:0.90", "--brightness", "0.95", NULL,
   "dunst", NULL,
+  "easyeffects", "--gaaplication-service", NULL,
   "unclutter", NULL,
   "run_xidlehook", NULL,
   "safeeyes", NULL,
@@ -50,7 +51,7 @@ static const Rule rules[] = {
 	 */
   /* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
   { "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
-  { "firefox",  NULL,       NULL,       1 << 1,       0,           -1,        50,50,500,500,        5 },
+  { "firefox",  NULL,       NULL,       1 << 0,       0,           -1,        50,50,500,500,        5 },
   { "qutebrowser",  NULL,   NULL,       1 << 0,       0,           -1,        50,50,500,500,        0 },
   { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        100,50,1200,640,        5 },
   { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
@@ -58,6 +59,7 @@ static const Rule rules[] = {
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 	{ NULL,       NULL,   "vimiv",   0,            1,           -1,        150,10,1000,600,        5, 'v' },
 	{ NULL,       NULL,   "wikiman",   0,            1,           -1,        100,10,1000,600,        5, 'w' },
+	{ NULL,       NULL,   "vimwiki",   0,            1,           -1,        100,10,1000,600,        5, 'i' },
 };
 
 /* layout(s) */
@@ -100,6 +102,7 @@ static const char *termcmd[]  = { "st", NULL };
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.5", "-t", "scratchpad", NULL}; 
 static const char *wikiman[] = {"w", "st", "-A", "0.9", "-t", "wikiman", "-e", "wikiman", NULL}; 
+static const char *vimwiki[] = {"i", "st", "-A", "0.9", "-t", "vimwiki", "-e", "vim", "/home/aevim/.vimwiki/index.md", NULL}; 
 static const char *vimiv[] = {"v", "vimiv", "~/.web", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
 static const char *voldown[] = {"volume.sh", "down", NULL}; 
@@ -114,6 +117,7 @@ static Key keys[] = {
 	{ MODKEY2,                      XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_v,      togglescratch,  {.v = vimiv } },
+	{ MODKEY,                       XK_v,      togglescratch,  {.v = vimwiki } },
 	{ MODKEY|ShiftMask,             XK_u,      spawn,          {.v = volup } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pymor } },
