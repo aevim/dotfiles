@@ -1,10 +1,10 @@
 #!/bin/bash
 normal="^c#f8f8f2^"
-normal_men="^c#50fa7b^"
-normal_cpu="^c#8be9fd^"
-normal_root="^c#ffb86c^"
-normal_home="^c#bd93f9^"
-normal_date="^c#ff79c6^"
+normal_men="^c#e39400^"
+normal_cpu="^c#b3a1e6^"
+normal_root="^c#5ccc96^"
+normal_home="^c#00a3cc^"
+normal_date="^c#ce6f8f^"
 urgent="^c#ff5555^"
 alarming="^c#f1fa8c^"
 
