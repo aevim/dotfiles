@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Monoid Nerd Font Mono:pixelsize=14:antialias=true:autohint=true";
+static char *font = "JetBrains Mono:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -97,38 +97,45 @@ unsigned int tabspaces = 8;
 float alpha = 1.0;
 
 static const char *colorname[] = {
-  /* 8 normal colors */
-  [0] = "#000000", /* black   */
-  [1] = "#ff5555", /* red     */
-  [2] = "#50fa7b", /* green   */
-  [3] = "#f1fa8c", /* yellow  */
-  [4] = "#bd93f9", /* blue    */
-  [5] = "#ff79c6", /* magenta */
-  [6] = "#8be9fd", /* cyan    */
-  [7] = "#bbbbbb", /* white   */
 
-  /* 8 bright colors */
-  [8]  = "#44475a", /* black   */
-  [9]  = "#ff5555", /* red     */
-  [10] = "#50fa7b", /* green   */
-  [11] = "#f1fa8c", /* yellow  */
-  [12] = "#bd93f9", /* blue    */
-  [13] = "#ff79c6", /* magenta */
-  [14] = "#8be9fd", /* cyan    */
-  [15] = "#ffffff", /* white   */
+   	/* 8 normal colors */
+       "#000000",
+       "#e33400",
+       "#5ccc96",
+       "#b3a1e6",
+       "#00a3cc",
+       "#f2ce00",
+       "#7a5ccc",
+       "#686f9a",
+ 
+    /* 8 bright colors */
+       "#686f9a",
+       "#e33400",
+       "#5ccc96",
+       "#b3a1e6",
+       "#00a3cc",
+       "#f2ce00",
+       "#7a5ccc",
+       "#f0f1ce",
+ 
+       [255] = 0,
+ 
+       "#ecf0c1", // 256 -> reverse cursor
+       "#ecf0c1", // 257 -> cursor
+       "#ecf0c1", // 258 -> foreground
+       "#0f111b", // 259 -> background
 
-  /* special colors */
-  [256] = "#282a36", /* background */
-  [257] = "#f8f8f2", /* foreground */
-};
+ };
+ 
 /*
-* Default colors (colorname index)
- * foreground, background, cursor
-*/
-unsigned int defaultfg = 257;
-unsigned int defaultbg = 256;
+ * Default colors (colorname index)
+ * foreground, background, cursor, reverse cursor
+ */
+unsigned int defaultfg = 258;
+unsigned int defaultbg = 259;
 unsigned int defaultcs = 257;
-static unsigned int defaultrcs = 257;
+unsigned int defaultrcs = 256;
+
 unsigned int const currentBg = 6, buffSize = 2048;
 /// Enable double / triple click yanking / selection of word / line.
 int const mouseYank = 1, mouseSelect = 0;
