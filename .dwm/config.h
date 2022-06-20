@@ -16,13 +16,13 @@ static const int topbar             = 1;     /* 0 means bottom bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab     = showtab_auto;        /* Default tab bar show mode */
 static const int toptab        = True;               /* False means bottom tab bar */
-static const char *fonts[]          = { "Monoid Nerd Font Mono:size=12" };
-static const char dmenufont[]       = "Monoid Nerd Font Mono:size=12";
-static const char bg[]       = "#282a36";
-static const char bg2[]      = "#44475a";
-static const char fg[]       = "#f8f8f2";
-static const char fg2[]      = "#8be9fd";
-static const char option[]   = "#ff79c6";
+static const char *fonts[]          = { "JetBrains Mono:size=12" };
+static const char dmenufont[]       = "JetBrains Mono:size=12";
+static const char bg[]       = "#0f111b";
+static const char bg2[]      = "#30365F";
+static const char fg[]       = "#ecf0c1";
+static const char fg2[]      = "#00a3cc";
+static const char option[]   = "#ce6f8f";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { fg,        bg,       option },
@@ -30,8 +30,8 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-  "hsetroot", "-solid", "#282a36", NULL,
   "xrandr", "--output", "VGA-1", "--gamma", "1.0:0.88:0.90", "--brightness", "0.95", NULL,
+  "hsetroot", "-solid", "#0f111b", NULL,
   "dunst", NULL,
   "easyeffects", "--gaaplication-service", NULL,
   "unclutter", NULL,
@@ -106,6 +106,7 @@ static const char *vimwiki[] = {"i", "st", "-A", "0.9", "-t", "vimwiki", "-e", "
 static const char *vimiv[] = {"v", "vimiv", "/home/aevim/.web", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
 static const char *voldown[] = {"volume.sh", "down", NULL}; 
+static const char *layout[] = {"layout.sh", NULL}; 
 static const char *closepop[] = {"dunstctl", "close-all", NULL}; 
 static const char *pymor[] = {"pymor", "-p", "20", "-l", "3", NULL}; 
 
@@ -115,6 +116,7 @@ static Key keys[] = {
 	{ MODKEY2,                      XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY2,                      XK_t,      spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = layout } },
 	{ MODKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_v,      togglescratch,  {.v = vimiv } },
 	{ MODKEY,                       XK_v,      togglescratch,  {.v = vimwiki } },
