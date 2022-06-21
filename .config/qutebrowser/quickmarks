@@ -28,5 +28,6 @@ tune https://github.com/redhat-performance/tuned
 gm https://wiki.archlinux.org/title/General_recommendations
 git cli https://cli.github.com/manual/
 dev https://dev.to/
- ,~       https://github.com/watching
+ ,~ https://github.com/watching
 sct https://flak.tedunangst.com/post/sct-set-color-temperature
+emmet cheat-sheet https://docs.emmet.io/cheat-sheet/

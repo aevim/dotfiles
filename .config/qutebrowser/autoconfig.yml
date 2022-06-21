@@ -6,5 +6,12 @@
 
 config_version: 2
 settings:
-  content.register_protocol_handler:
-    https://mail.google.com?extsrc=mailto&url=%25s: false
+  bindings.commands:
+    global:
+      normal:
+        ',M': hint links spawn mpv {hint-url}
+        ',d': config-cycle content.user_stylesheets ~/.config/qutebrowser/spaceduck-all-sites.css
+          ""
+        ',m': spawn mpv {url}
+  content.user_stylesheets:
+    global: null
