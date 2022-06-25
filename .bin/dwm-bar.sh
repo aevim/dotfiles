@@ -26,7 +26,7 @@ if [[ $volume -ge 45 ]]; then
 elif [[ $volume -le 10 ]]; then
   status+="   $urgent|$volume% "
 elif [[ $volume -ge 35 ]]; then
-  status+="   $alarming|$volume% "
+  status+="   $alarming|$volume% "
 else
   status+="   $normal|$volume% "
 fi
@@ -47,9 +47,9 @@ fi
 
 if [[ $(echo "$root_int < 5" | bc) -ne 0 ]]; then
   echo E
-  status+="$alarming$root_int""g " 
+  status+="$alarming$root_int""g " 
 elif [[ $(echo "$root_int < 2" | bc) -ne 0 ]]; then 
-  status+="$urgent$root_int""g " 
+  status+="$urgent$root_int""g " 
 else
   status+="$normal_root|$root_int""g " 
 fi
