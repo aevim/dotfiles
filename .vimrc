@@ -5,6 +5,9 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch
+let g:netrw_preview   = 1
+let g:netrw_liststyle = 3
+let g:netrw_winsize   = 30
 
 " Color scheme (terminal)
 set background=dark
@@ -39,6 +42,7 @@ nm <C-J> <C-W>j
 nm <C-K> <C-W>k
 nm <C-L> <C-W>l
 nm <C-Q> <C-W>q
+nm <C-n> :Lexplore<cr>
 nm gn :bn<cr>
 nm gp :bp<cr>
 nm gd :bd<cr>
