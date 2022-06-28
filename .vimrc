@@ -25,18 +25,20 @@ set lcs=tab:»_,trail:·
 " this will make so when tab hitting tab, 2 spaces will be used.
 set autoindent expandtab tabstop=2 shiftwidth=2
 
+filetype plugin indent on
 syntax on
 
 " mappins
 let mapleader = ","
 map <leader><space> :let @/=''<cr> " clear search
-nm <leader>f :vertical sfind *
+nm <leader>v :vertical sfind *
+nm <leader>f :find *
 nm <leader>t :tabfind *
-nm <C><N> :tabNext
 nm <C-H> <C-W>h
 nm <C-J> <C-W>j
 nm <C-K> <C-W>k
 nm <C-L> <C-W>l
+nm <C-Q> <C-W>q
 nm gn :bn<cr>
 nm gp :bp<cr>
 nm gd :bd<cr>
