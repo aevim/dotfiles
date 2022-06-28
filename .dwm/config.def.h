@@ -55,16 +55,19 @@ static const Rule rules[] = {
   { "qutebrowser",  NULL,   NULL,       1 << 1,       0,           -1,        50,50,500,500,        0 },
   { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        20,50,1300,640,        5 },
   { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
+  { "Safeeyes",    NULL,       NULL,       0,       1,           -1,        50,50,1200,600,        5 },
+  { "Zathura",    NULL,       NULL,       0,       1,           -1,        50,50,1200,700,        5 },
   { "qBittorrent",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
   { "Deluge-gtk",    NULL,       NULL,       0,       1,           -1,        150,50,1100,600,        5 },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 	{ NULL,       NULL,   "vimiv",   0,            1,           -1,        150,10,1000,600,        5, 'v' },
 	{ NULL,       NULL,   "cmus",   0,            1,           -1,        150,10,1000,600,        5, 'c' },
-	{ NULL,       NULL,   "wikiman",   0,            1,           -1,        100,10,1000,600,        5, 'w' },
-	{ NULL,       NULL,   "vimwiki",   0,            1,           -1,        100,10,1000,600,        5, 'i' },
+	{ NULL,       NULL,   "wikiman",   0,            1,           -1,        150,10,1000,600,        5, 'w' },
+	{ NULL,       NULL,   "vimwiki",   0,            1,           -1,        150,10,1000,600,        5, 'i' },
+	{ NULL,       NULL,   "filemanager",   0,            1,           -1,        150,10,1000,600,        5, 'f' },
 };
 
-/* layout(s) */
+/* layout() */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
@@ -106,6 +109,7 @@ static const char *scratchpadcmd[] = {"s", "st", "-A", "0.5", "-t", "scratchpad"
 static const char *wikiman[] = {"w", "st", "-A", "0.9", "-t", "wikiman", "-e", "wikiman", NULL}; 
 static const char *vimwiki[] = {"i", "st", "-A", "0.9", "-t", "vimwiki", "-e", "vim", "/home/aevim/.vimwiki/index.md", NULL}; 
 static const char *vimiv[] = {"v", "vimiv", "/home/aevim/.web", NULL}; 
+static const char *filemanager[] = {"f", "st", "-A", "0.9", "-t", "filemanager", "-e", "sfm", NULL}; 
 static const char *cmus[] = {"c", "st", "-A", "0.6", "-t", "cmus", "-e", "cmus", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
 static const char *voldown[] = {"volume.sh", "down", NULL}; 
@@ -124,6 +128,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,      togglescratch,  {.v = cmus } },
 	{ MODKEY|ShiftMask,             XK_v,      togglescratch,  {.v = vimiv } },
 	{ MODKEY,                       XK_v,      togglescratch,  {.v = vimwiki } },
+	{ MODKEY2,                      XK_n,      togglescratch,  {.v = filemanager } },
 	{ MODKEY|ShiftMask,             XK_u,      spawn,          {.v = volup } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = pymor } },
