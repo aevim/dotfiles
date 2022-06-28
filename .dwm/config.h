@@ -16,13 +16,13 @@ static const int topbar             = 1;     /* 0 means bottom bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab     = showtab_auto;        /* Default tab bar show mode */
 static const int toptab        = True;               /* False means bottom tab bar */
-static const char *fonts[]          = { "JetBrains Mono:size=12" };
+static const char *fonts[]          = { "JetBrains Mono:size=12", "FontAwesome5Brands:size=12:antialias:true", "FontAwesome5Free:size=12:antialias:true", "FontAwesome5Free:style=Solid:size=12:antialias:true"};
 static const char dmenufont[]       = "JetBrains Mono:size=12";
-static const char bg[]       = "#0f111b";
-static const char bg2[]      = "#30365F";
-static const char fg[]       = "#ecf0c1";
-static const char fg2[]      = "#00a3cc";
-static const char option[]   = "#ce6f8f";
+static const char bg[]       = "#282828";
+static const char bg2[]      = "#504945";
+static const char fg[]       = "#ebdbb2";
+static const char fg2[]      = "#d5c4a1";
+static const char option[]   = "#fe8019";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { fg,        bg,       option },
@@ -56,8 +56,10 @@ static const Rule rules[] = {
   { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        20,50,1300,640,        5 },
   { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
   { "qBittorrent",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
+  { "Deluge-gtk",    NULL,       NULL,       0,       1,           -1,        150,50,1100,600,        5 },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
 	{ NULL,       NULL,   "vimiv",   0,            1,           -1,        150,10,1000,600,        5, 'v' },
+	{ NULL,       NULL,   "cmus",   0,            1,           -1,        150,10,1000,600,        5, 'c' },
 	{ NULL,       NULL,   "wikiman",   0,            1,           -1,        100,10,1000,600,        5, 'w' },
 	{ NULL,       NULL,   "vimwiki",   0,            1,           -1,        100,10,1000,600,        5, 'i' },
 };
@@ -104,6 +106,7 @@ static const char *scratchpadcmd[] = {"s", "st", "-A", "0.5", "-t", "scratchpad"
 static const char *wikiman[] = {"w", "st", "-A", "0.9", "-t", "wikiman", "-e", "wikiman", NULL}; 
 static const char *vimwiki[] = {"i", "st", "-A", "0.9", "-t", "vimwiki", "-e", "vim", "/home/aevim/.vimwiki/index.md", NULL}; 
 static const char *vimiv[] = {"v", "vimiv", "/home/aevim/.web", NULL}; 
+static const char *cmus[] = {"c", "st", "-A", "0.6", "-t", "cmus", "-e", "cmus", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
 static const char *voldown[] = {"volume.sh", "down", NULL}; 
 static const char *layout[] = {"layout.sh", NULL}; 
@@ -113,17 +116,18 @@ static const char *pymor[] = {"pymor", "-p", "20", "-l", "3", NULL};
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
-	{ MODKEY2,                      XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
+	{ MODKEY2,                      XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY2,                      XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = layout } },
 	{ MODKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY|ShiftMask,             XK_c,      togglescratch,  {.v = cmus } },
 	{ MODKEY|ShiftMask,             XK_v,      togglescratch,  {.v = vimiv } },
 	{ MODKEY,                       XK_v,      togglescratch,  {.v = vimwiki } },
 	{ MODKEY|ShiftMask,             XK_u,      spawn,          {.v = volup } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pymor } },
-	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = closepop } },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = pymor } },
+	{ MODKEY|ControlMask,           XK_c,      spawn,          {.v = closepop } },
 	{ MODKEY|ShiftMask,             XK_a,      togglescratch,  {.v = wikiman } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_w,      tabmode,        {-1} },
