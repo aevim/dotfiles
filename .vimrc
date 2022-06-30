@@ -9,9 +9,16 @@ let g:netrw_preview   = 1
 let g:netrw_banner=0
 let g:netrw_liststyle = 3
 let g:netrw_winsize   = 30
+
+" this is emmet configuration "
+" autocmd is used to load only on specific files"
 let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key=','
 autocmd FileType html,css,scss,sass EmmetInstall
+
+" highlight current line "
+set cursorline
+:highlight Cursorline cterm=bold ctermbg=black
 
 " Color scheme (terminal)
 set background=dark
@@ -30,7 +37,7 @@ set list
 set lcs=tab:»_,trail:·
 
 " this will make so when tab hitting tab, 2 spaces will be used.
-set autoindent expandtab tabstop=2 shiftwidth=2
+set autoindent expandtab tabstop=4 shiftwidth=4
 
 filetype plugin indent on
 syntax on
@@ -53,6 +60,11 @@ nm gd :bd<cr>
 noremap <F5> :set list!<CR>
 inoremap <F5> <C-o>:set list!<CR>
 cnoremap <F5> <C-c>:set list!<CR>
+
+" this is for setting vim for true colors "
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
 
 augroup numbertoggle
 autocmd!
