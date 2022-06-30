@@ -4,11 +4,26 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+
+" this will highlight the ending match "
 set showmatch
+
+" this will disable 'insert' text at the bottom "
+set noshowmode
+
+" this is for lightline to work " 
+set laststatus=2
+
+let g:lightline = {
+          \ 'colorscheme': 'gruvbox',
+      \ }
+
+" this is for the file browser "
 let g:netrw_preview   = 1
-let g:netrw_banner=0
+let g:netrw_banner    = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize   = 30
+nm <C-n> :Lexplore<cr>
 
 " this is emmet configuration "
 " autocmd is used to load only on specific files"
@@ -45,21 +60,27 @@ syntax on
 " mappins
 let mapleader = ","
 map <leader><space> :let @/=''<cr> " clear search
+
+" this is for fiding files "
+" it will split vertically "
 nm <leader>v :vertical sfind *
+
+" it will replace the current file "
 nm <C-f> :find *
+
+" it will open new file in another tab "
 nm <leader>t :tabfind *
+
+" this will make easier to move between windows "
 nm <C-H> <C-W>h
 nm <C-J> <C-W>j
 nm <C-K> <C-W>k
 nm <C-L> <C-W>l
-nm <C-Q> <C-W>q
-nm <C-n> :Lexplore<cr>
+
+" this will switch between buffers "
 nm gn :bn<cr>
 nm gp :bp<cr>
 nm gd :bd<cr>
-noremap <F5> :set list!<CR>
-inoremap <F5> <C-o>:set list!<CR>
-cnoremap <F5> <C-c>:set list!<CR>
 
 " this is for setting vim for true colors "
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
