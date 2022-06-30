@@ -5,6 +5,9 @@ set incsearch
 set ignorecase
 set smartcase
 
+" this if to prevent the 'O' key from having a delay "
+set ttimeoutlen=100
+
 " this will highlight the ending match "
 set showmatch
 
@@ -46,10 +49,6 @@ set path=$PWD/**
 set wildmenu
 set wildmode=full
 set wildignore+=*/node_modules/*,_site
-
-" this wil add >>_ for each tab space.
-set list
-set lcs=tab:»_,trail:·
 
 " this will make so when tab hitting tab, 2 spaces will be used.
 set autoindent expandtab tabstop=4 shiftwidth=4
