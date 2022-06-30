@@ -77,6 +77,8 @@ nm <C-J> <C-W>j
 nm <C-K> <C-W>k
 nm <C-L> <C-W>l
 
+nm <C-s> :so ~/.vimrc<cr>
+
 " this will switch between buffers "
 nm gn :bn<cr>
 nm gp :bp<cr>
