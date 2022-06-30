@@ -9,6 +9,9 @@ let g:netrw_preview   = 1
 let g:netrw_banner=0
 let g:netrw_liststyle = 3
 let g:netrw_winsize   = 30
+let g:user_emmet_install_global = 0
+let g:user_emmet_leader_key=','
+autocmd FileType html,css,scss,sass EmmetInstall
 
 " Color scheme (terminal)
 set background=dark
@@ -36,7 +39,7 @@ syntax on
 let mapleader = ","
 map <leader><space> :let @/=''<cr> " clear search
 nm <leader>v :vertical sfind *
-nm <leader>f :find *
+nm <C-f> :find *
 nm <leader>t :tabfind *
 nm <C-H> <C-W>h
 nm <C-J> <C-W>j
@@ -47,6 +50,9 @@ nm <C-n> :Lexplore<cr>
 nm gn :bn<cr>
 nm gp :bp<cr>
 nm gd :bd<cr>
+noremap <F5> :set list!<CR>
+inoremap <F5> <C-o>:set list!<CR>
+cnoremap <F5> <C-c>:set list!<CR>
 
 augroup numbertoggle
 autocmd!
