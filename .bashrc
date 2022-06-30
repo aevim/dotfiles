@@ -8,8 +8,8 @@ if [ -f $HOME/.bashrc_prompt ]; then
   . $HOME/.bashrc_prompt
 fi
 
-if [ -f $HOME/.aliases ]; then
-  . $HOME/.aliases
+if [ -f $HOME/.bash_aliases ]; then
+  . $HOME/.bash_aliases
 fi
 
 export PATH=$PATH:$HOME/.bin
@@ -28,3 +28,9 @@ man() {
 shopt -s autocd
 
 alias ls='ls --color=auto'
+
+# Use bash-completion, if available
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+	    . /usr/share/bash-completion/bash_completion
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
