@@ -52,4 +52,4 @@ function parse_git_dirty {
 }
 
 export PS1="\[\e[35m\]\`parse_git_branch\`\[\e[m\][\[\e[32m\]\W\[\e[m\]]
-> " && complete -cf doas
+|>" && complete -cf doas
