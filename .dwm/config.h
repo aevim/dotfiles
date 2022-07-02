@@ -33,6 +33,7 @@ static const char *const autostart[] = {
   "xrandr", "--output", "VGA-1", "--gamma", "1.0:0.88:0.90", "--brightness", "0.95", NULL,
   "hsetroot", "-solid", "#282828", NULL,
   "dunst", NULL,
+  "xset", "led", NULL,
   "easyeffects", "--gaaplication-service", NULL,
   "unclutter", NULL,
   "run_xidlehook", NULL,
@@ -55,11 +56,15 @@ static const Rule rules[] = {
   { "qutebrowser",  NULL,   NULL,       1 << 1,       0,           -1,        50,50,500,500,        0 },
   { "Steam",    NULL,       NULL,       1 << 7,       1,           -1,        20,50,1300,640,        5 },
   { "Com.github.tchx84.Flatseal",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
-  { "Safeeyes",    NULL,       NULL,       0,       1,           -1,        50,50,1200,600,        5 },
+  { "Safeeyes",    NULL,       NULL,       0,       1,           -1,        0,0,1360,768,        0 },
+  { "Lxappearance",    NULL,       NULL,       0,       1,           -1,        150,50,600,400,        5 },
+  { NULL,    NULL,       "Select Folder to Upload",       0,       1,           -1,        50,50,1000,500,        5 },
   { "Zathura",    NULL,       NULL,       0,       1,           -1,        50,50,1200,700,        5 },
   { "qBittorrent",    NULL,       NULL,       0,       1,           -1,        50,50,800,600,        5 },
   { "Deluge-gtk",    NULL,       NULL,       0,       1,           -1,        150,50,1100,600,        5 },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,        80,10,1200,300,        5, 's' },
+	{ "Chromium", NULL,   NULL,   0,            1,           -1,        80,10,1200,600,        5, '1' },
+	{ "librewolf",NULL,   NULL,   0,            1,           -1,        80,10,1200,600,        5, '2' },
 	{ NULL,       NULL,   "vimiv",   0,            1,           -1,        150,10,1000,600,        5, 'v' },
 	{ NULL,       NULL,   "cmus",   0,            1,           -1,        150,10,1000,600,        5, 'c' },
 	{ NULL,       NULL,   "wikiman",   0,            1,           -1,        150,10,1000,600,        5, 'w' },
@@ -109,6 +114,8 @@ static const char *scratchpadcmd[] = {"s", "st", "-A", "0.5", "-t", "scratchpad"
 static const char *wikiman[] = {"w", "st", "-A", "0.9", "-t", "wikiman", "-e", "wikiman", NULL}; 
 static const char *vimwiki[] = {"i", "st", "-A", "0.9", "-t", "vimwiki", "-e", "vim", "/home/aevim/.vimwiki/index.md", NULL}; 
 static const char *vimiv[] = {"v", "vimiv", "/home/aevim/.web", NULL}; 
+static const char *chromium[] = {"1", "chromium", "http://127.0.0.1:8080/", NULL}; 
+static const char *librewolf[] = {"2", "librewolf", "http://127.0.0.1:8080/", NULL}; 
 static const char *filemanager[] = {"f", "st", "-A", "0.9", "-t", "filemanager", "-e", "sfm", NULL}; 
 static const char *cmus[] = {"c", "st", "-A", "0.6", "-t", "cmus", "-e", "cmus", NULL}; 
 static const char *volup[] = {"volume.sh", "up", NULL}; 
@@ -129,6 +136,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_v,      togglescratch,  {.v = vimiv } },
 	{ MODKEY,                       XK_v,      togglescratch,  {.v = vimwiki } },
 	{ MODKEY2,                      XK_n,      togglescratch,  {.v = filemanager } },
+	{ MODKEY2,                      XK_1,      togglescratch,  {.v = chromium } },
+	{ MODKEY2,                      XK_2,      togglescratch,  {.v = librewolf } },
 	{ MODKEY|ShiftMask,             XK_u,      spawn,          {.v = volup } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = voldown } },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = pymor } },
