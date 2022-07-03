@@ -51,7 +51,7 @@ set wildmode=full
 set wildignore+=*/node_modules/*,_site
 
 " this will make so when tab hitting tab, 2 spaces will be used.
-set autoindent expandtab tabstop=4 shiftwidth=4
+set autoindent expandtab tabstop=2 shiftwidth=2
 
 filetype plugin indent on
 syntax on
@@ -87,6 +87,36 @@ nm gd :bd<cr>
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
+
+" # Close brackets automatically, with return
+inoremap {<cr> {<cr>}<C-O><S-O>
+inoremap (<cr> (<cr>)<c-o><s-o>
+inoremap [<cr> [<cr>]<c-o><s-o>
+" # Close brackets without return
+inoremap ( ()<left>
+inoremap { {}<left>
+inoremap [ []<left>
+" # Two cases below are covered by inoremap <exp>
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" # If you close a bracket that is already closed, it overwrites
+inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
+inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
+inoremap <expr> ' strpart(getline('.'), col('.')-1, 1) == "'" ? "\<Right>" : "''<left>"
+inoremap <expr> " strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"\"<left>"
+" # enclose a word in normal mode with "'({[
+nnoremap ' mmbi'<esc>ea'<esc>`m<right>
+nnoremap " mmbi"<esc>ea"<esc>`m<right>
+nnoremap ( mmbi(<esc>ea)<esc>`m<right>
+nnoremap { mmbi{<esc>ea}<esc>`m<right>
+nnoremap [ mmbi[<esc>ea]<esc>`m<right>
+" # enclose a selection in visual mode with "'({[
+vnoremap ' <Esc>`<i'<Esc>`>a<right>'<Esc>
+vnoremap " <Esc>`<i"<Esc>`>a<right>"<Esc>
+vnoremap ( <Esc>`<i(<Esc>`>a<right>)<Esc>
+vnoremap { <Esc>`<i{<Esc>`>a<right>}<Esc>
+vnoremap [ <Esc>`<i[<Esc>`>a<right>]<Esc>
 
 augroup numbertoggle
 autocmd!
