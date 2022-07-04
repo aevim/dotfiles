@@ -1,22 +1,20 @@
---- config.def.h
-+++ config.def.h
-@@ -72,8 +80,8 @@ static Key keys[] = {
- 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
- 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
- 	{ MODKEY,                       XK_b,      togglebar,      {0} },
--	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
--	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-+	STACKKEYS(MODKEY,                          focus)
-+	STACKKEYS(MODKEY|ShiftMask,                push)
- 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
- 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
- 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-@@ -101,7 +109,7 @@ static Key keys[] = {
- 	TAGKEYS(                        XK_7,                      6)
- 	TAGKEYS(                        XK_8,                      7)
- 	TAGKEYS(                        XK_9,                      8)
--	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-+	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
+--- config.def.h	2019-07-24 08:59:14.429282151 +0200
++++ config.def.h	2019-07-24 09:01:08.983271468 +0200
+@@ -42,6 +42,8 @@ static const Layout layouts[] = {
+ 	{ "[]=",      tile },    /* first entry is default */
+ 	{ "><>",      NULL },    /* no layout function means floating behavior */
+ 	{ "[M]",      monocle },
++	{ "TTT",      bstack },
++	{ "===",      bstackhoriz },
  };
  
- /* button definitions */
+ /* key definitions */
+@@ -77,6 +79,8 @@ static Key keys[] = {
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+ 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
++   { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
++   { MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[4]} },
+ 	{ MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+ 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
