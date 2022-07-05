@@ -1,9 +1,11 @@
 #!/bin/sh
-hsetroot -solid '#282a36' &
+emacs --daemon &
+hsetroot -solid '#282828' &
+xmodmap ~/.Xmodmap &
 xrandr --output VGA-1 --gamma 1.0:0.88:0.60 --brightness 0.95 &
-dunst &
 unclutter &
 run_xidlehook &
+xcape -e 'Control_L=Escape' &
+dunst &
 safeeyes &
-xmodmap -e ~/.Xmodmap &
-emacs --daemon &
+xset led on &

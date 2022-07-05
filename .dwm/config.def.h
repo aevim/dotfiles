@@ -40,10 +40,12 @@ static const Rule rules[] = {
   /* class | instance | title | tags mask | isfloating |  monitor | scratch key | float x,y,w,h | floatborderpx */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "Navigator",   NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
+	{ "Brave-browser", NULL,   NULL,       1 << 0,   0,       -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Steam",    NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ "Zathura",  NULL,     NULL,       1 << 3,   0,          -1,                   50,50,500,500,        5 },
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
+	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
   { NULL,       NULL,   "scratchpad", 0,        1,          -1,         's',      250,20,900,300,       5 },
   { NULL,       NULL,   "fm",         0,        1,          -1,         'f',      50,20,1200,600,       5 },
 };
@@ -87,6 +89,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *volup[]    = { "volume.sh", "up", NULL };
+static const char *voldw[]    = { "volume.sh", "down", NULL };
 static const char *emacs[]    = { "emacsclient", "-c", "-a", "'emacs'", NULL };
 static const char *rgb_on[]   = { "xset", "led", "on", NULL };
 static const char *rgb_off[]  = { "xset", "led", "off", NULL };
@@ -101,6 +105,8 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
 	{ ALTKEY,                       XK_t,      spawn,          {.v = termcmd } },
+	{ ALTKEY,                       XK_i,      spawn,          {.v = volup } },
+	{ ALTKEY,                       XK_o,      spawn,          {.v = voldw } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacs } },
   { ALTKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
   { ALTKEY,                       XK_m,      togglescratch,  {.v = filemanager } },
