@@ -30,7 +30,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "▶", "", "" };
+static const char *tags[] = { "", "", "▶", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -39,8 +39,10 @@ static const Rule rules[] = {
 	 */
   /* class | instance | title | tags mask | isfloating |  monitor | scratch key | float x,y,w,h | floatborderpx */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        50,50,500,500,        5 },
-  { NULL,       NULL,   "scratchpad",   0,            1,           -1,  's',    50,50,500,500,         5 },
+	{ NULL,  "Navigator",       NULL,       1 << 0,       0,           -1,        50,50,500,500,        5 },
+	{ NULL,  "qutebrowser",       NULL,       1 << 0,       0,           -1,        50,50,500,500,        5 },
+	{ "Steam",    NULL,       NULL,       1 << 4,       0,           -1,        50,50,500,500,        5 },
+  { NULL,       NULL,   "scratchpad",   0,            1,           -1,  's',    250,20,900,300,         5 },
 
 };
 
@@ -67,13 +69,21 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define STACKKEYS(MOD,ACTION) \
+	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
+	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
+	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
+	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
+	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", bg2, "-sb", option, "-sf", fg2, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *rgb_on[]  = { "xset", "led", "on", NULL };
 static const char *rgb_off[]  = { "xset", "led", "off", NULL };
@@ -91,6 +101,8 @@ static Key keys[] = {
 	{ 0,                            XK_Prior,  spawn,          {.v = rgb_on } },
 	{ 0,                            XK_Next,   spawn,          {.v = rgb_off } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+  STACKKEYS(MODKEY,                          focus)
+	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ ALTKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ ALTKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -120,7 +132,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  { MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
 };
 
 /* button definitions */

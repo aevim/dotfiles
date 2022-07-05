@@ -5,5 +5,4 @@ dunst &
 unclutter &
 run_xidlehook &
 safeeyes &
-xcape -e 'Control_L=Escape' &
-
+xmodmap -e ~/.Xmodmap &
