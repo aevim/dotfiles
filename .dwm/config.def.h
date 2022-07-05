@@ -46,8 +46,9 @@ static const Rule rules[] = {
 	{ "Zathura",  NULL,     NULL,       1 << 3,   0,          -1,                   50,50,500,500,        5 },
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
 	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
-  { NULL,       NULL,   "scratchpad", 0,        1,          -1,         's',      250,20,900,300,       5 },
-  { NULL,       NULL,   "fm",         0,        1,          -1,         'f',      50,20,1200,600,       5 },
+	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,         's',      50,20,1200,400,       5 },
+	{ NULL,       NULL,   "fm",         0,        1,          -1,         'f',      50,20,1200,600,       5 },
+	{ NULL,       NULL,    "cmus",         0,        1,          -1,         'c',      50,20,1200,600,       5 },
 };
 
 /* layout(s) */
@@ -91,6 +92,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *volup[]    = { "volume.sh", "up", NULL };
 static const char *voldw[]    = { "volume.sh", "down", NULL };
+static const char *browser[]    = { "brave", NULL };
 static const char *emacs[]    = { "emacsclient", "-c", "-a", "'emacs'", NULL };
 static const char *rgb_on[]   = { "xset", "led", "on", NULL };
 static const char *rgb_off[]  = { "xset", "led", "off", NULL };
@@ -98,9 +100,11 @@ static const char *rgb_off[]  = { "xset", "led", "off", NULL };
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL};
 static const char *filemanager[] = {"f", "st", "-t", "fm", "ranger", NULL};
+static const char *cmus[] = {"c", "st", "-t", "cmus", "cmus", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ ALTKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
@@ -108,12 +112,13 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_i,      spawn,          {.v = volup } },
 	{ ALTKEY,                       XK_o,      spawn,          {.v = voldw } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacs } },
-  { ALTKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
-  { ALTKEY,                       XK_m,      togglescratch,  {.v = filemanager } },
+	{ ALTKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
+	{ ALTKEY,                       XK_m,      togglescratch,  {.v = filemanager } },
+	{ ALTKEY,                       XK_l,      togglescratch,  {.v = cmus } },
 	{ 0,                            XK_Prior,  spawn,          {.v = rgb_on } },
 	{ 0,                            XK_Next,   spawn,          {.v = rgb_off } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
-  STACKKEYS(MODKEY,                          focus)
+	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ ALTKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ ALTKEY,                       XK_k,      focusstack,     {.i = -1 } },
