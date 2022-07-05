@@ -38,11 +38,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
   /* class | instance | title | tags mask | isfloating |  monitor | scratch key | float x,y,w,h | floatborderpx */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
-	{ NULL,  "Navigator",       NULL,       1 << 0,       0,           -1,        50,50,500,500,        5 },
-	{ NULL,  "qutebrowser",       NULL,       1 << 0,       0,           -1,        50,50,500,500,        5 },
-	{ "Steam",    NULL,       NULL,       1 << 4,       0,           -1,        50,50,500,500,        5 },
-  { NULL,       NULL,   "scratchpad",   0,            1,           -1,  's',    250,20,900,300,         5 },
+	{ "Gimp",     NULL,     NULL,       0,            1,           -1,              50,50,500,500,        5 },
+	{ NULL,  "Navigator",   NULL,       1 << 0,       0,           -1,              50,50,500,500,        5 },
+	{ NULL,  "qutebrowser", NULL,       1 << 0,       0,           -1,              50,50,500,500,        5 },
+	{ "Steam",    NULL,     NULL,       1 << 4,       0,           -1,              50,50,500,500,        5 },
+  { NULL,       NULL,   "scratchpad", 0,            1,           -1,    's',      250,20,900,300,       5 },
 
 };
 
