@@ -18,11 +18,11 @@ static const int topbar             = 1;     /* 0 means bottom bar */
 static const int focusonwheel       = 0;
 static const char *fonts[]          = { "VictorMono:size=12" };
 static const char dmenufont[]       = "VictorMono:size=12";
-static const char bg[]       = "#282828";
-static const char bg2[]      = "#504945";
-static const char fg[]       = "#ebdbb2";
-static const char fg2[]      = "#d5c4a1";
-static const char option[]   = "#fe8019";
+static const char bg[]              = "#282828";
+static const char bg2[]             = "#504945";
+static const char fg[]              = "#ebdbb2";
+static const char fg2[]             = "#d5c4a1";
+static const char option[]          = "#fe8019";
 static const char *colors[][3]      = {
    /*               fg         bg         border   */
    [SchemeNorm] = { fg,        bg,       bg2 },
@@ -43,6 +43,7 @@ static const Rule rules[] = {
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Steam",    NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ "Zathura",  NULL,     NULL,       1 << 3,   0,          -1,                   50,50,500,500,        5 },
+	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
   { NULL,       NULL,   "scratchpad", 0,        1,          -1,         's',      250,20,900,300,       5 },
   { NULL,       NULL,   "fm",         0,        1,          -1,         'f',      50,20,1200,600,       5 },
 };
@@ -86,7 +87,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *rgb_on[]  = { "xset", "led", "on", NULL };
+static const char *emacs[]    = { "emacsclient", "-c", "-a", "'emacs'", NULL };
+static const char *rgb_on[]   = { "xset", "led", "on", NULL };
 static const char *rgb_off[]  = { "xset", "led", "off", NULL };
 
 /*First arg only serves to match against key in rules*/
@@ -99,6 +101,7 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_t,      spawn,          {.v = termcmd } },
 	{ ALTKEY,                       XK_t,      spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_e,      spawn,          {.v = emacs } },
   { ALTKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
   { ALTKEY,                       XK_m,      togglescratch,  {.v = filemanager } },
 	{ 0,                            XK_Prior,  spawn,          {.v = rgb_on } },

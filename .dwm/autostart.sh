@@ -6,3 +6,4 @@ unclutter &
 run_xidlehook &
 safeeyes &
 xmodmap -e ~/.Xmodmap &
+emacs --daemon &
