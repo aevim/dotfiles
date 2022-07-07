@@ -30,7 +30,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "▶", "", "" };
+static const char *tags[] = { "", "", "▶", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -39,18 +39,21 @@ static const Rule rules[] = {
 	 */
   /* class | instance | title | tags mask | isfloating |  monitor | scratch key | float x,y,w,h | floatborderpx */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
-	//{ NULL,  "Navigator",   NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
-	{ "Brave-browser", NULL,   NULL,       1 << 0,   0,       -1,                   50,50,500,500,        5 },
+	//{ NULL,  "Navigator",   NULL,     1 << 0,   0,          -1,                   50,50,500,500,        5 },
+	{ "Brave-browser", NULL,   NULL,    1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Steam",    NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
+	{ NULL,       NULL,     "Steam",    1 << 4,   0,          -1,                   50,50,500,500,        5 },
+	{ "Bottles",  NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ "Zathura",  NULL,     NULL,       1 << 3,   0,          -1,                   50,50,500,500,        5 },
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
 	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,         's',      50,20,1200,400,       5 },
-	{ NULL,       NULL,   "fm",         0,        1,          -1,         'f',      50,20,1200,600,       5 },
-	{ "cmus",     NULL,    NULL,         0,        1,          -1,         'c',      50,20,1200,600,       5 },
-	{ NULL,     "chromium",    NULL,         0,        1,          -1,         'w',      50,20,1250,700,       5 },
-	{ NULL,     "Navigator",    NULL,         0,        1,          -1,         'd',      50,20,1250,700,       5 },
+	{ "fm",       NULL,    NULL,        0,        1,          -1,         'f',      50,20,1200,600,       5 },
+	{ "cmus",     NULL,    NULL,        0,        1,          -1,         'c',      50,20,1200,600,       5 },
+	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,         'v',      50,20,1200,600,       5 },
+	{ NULL,     "chromium",    NULL,    0,        1,          -1,         'w',      50,20,1250,700,       5 },
+	{ NULL,     "Navigator",    NULL,   0,        1,          -1,         'd',      50,20,1250,700,       5 },
 };
 
 /* layout(s) */
@@ -61,8 +64,8 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "()",    bstack },
-	{ "()",     monocle },
+	{ "()",    bstack },
+	{ "()",    monocle },
 	{ "><>",    NULL },    /* no layout function means floating behavior */
 };
 
@@ -100,9 +103,10 @@ static const char *rgb_on[]   = { "xset", "led", "on", NULL };
 static const char *rgb_off[]  = { "xset", "led", "off", NULL };
 
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL};
-static const char *filemanager[] = {"f", "st", "-t", "fm", "ranger", NULL};
+static const char *scratchpadcmd[] = {"s", "st", "-A", "0.6", "-t", "scratchpad", NULL};
+static const char *filemanager[] = {"f", "st", "-c", "fm", "ranger", NULL};
 static const char *cmus[] = {"c", "st", "-c", "cmus", "cmus", NULL};
+static const char *vimiv[] = {"v", "vimvi", "/hom/aevim/.web/projects/frontend-mentor/", NULL};
 static const char *dev_ch[] = {"w", "chromium", "http://127.0.0.1:8080", NULL};
 static const char *dev_fx[] = {"d", "firefox", "http://127.0.0.1:8080", NULL};
 
@@ -119,6 +123,7 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_u,      togglescratch,  {.v = scratchpadcmd } },
 	{ ALTKEY,                       XK_m,      togglescratch,  {.v = filemanager } },
 	{ ALTKEY,                       XK_l,      togglescratch,  {.v = cmus } },
+	{ MODKEY|ShiftMask,             XK_v,      togglescratch,  {.v = vimiv } },
 	{ ALTKEY,                       XK_8,      togglescratch,  {.v = dev_ch } },
 	{ ALTKEY,                       XK_9,      togglescratch,  {.v = dev_fx } },
 	{ 0,                            XK_Prior,  spawn,          {.v = rgb_on } },
