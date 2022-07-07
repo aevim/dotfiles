@@ -23,8 +23,10 @@ status=""
 
 if [[ $volume -ge 45 ]]; then
   status+="   $urgent|$volume% "
-elif [[ $volume -le 10 ]]; then
+elif [[ $volume -le 15 && $volume -gt 0 ]]; then
   status+="   $urgent|$volume% "
+elif [[ $volume -eq 0 ]]; then
+  status+="   $urgent|$volume% "
 elif [[ $volume -ge 35 ]]; then
   status+="   $alarming|$volume% "
 else
