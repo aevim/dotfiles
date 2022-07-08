@@ -28,6 +28,7 @@ static const Rule rules[] = {
 	 */
   /* class | instance | title | tags mask | isfloating |  monitor | scratch key | float x,y,w,h | floatborderpx */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
+	{ "dwm-config",NULL,     NULL,       0,        1,          -1,                  50,50,1200,600,       5 },
 	//{ NULL,  "Navigator",   NULL,     1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Brave-browser", NULL,   NULL,    1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
@@ -37,6 +38,7 @@ static const Rule rules[] = {
 	{ "Zathura",  NULL,     NULL,       1 << 3,   0,          -1,                   50,50,500,500,        5 },
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
 	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
+	{ "dev-e",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,        50,20,1200,400,     5 ,'s'},
 	{ "fm",       NULL,    NULL,        0,        1,          -1,        50,20,1200,600,  5,   'f' },
 	{ "cmus",     NULL,    NULL,        0,        1,          -1,        50,20,1200,600, 5, 'c' },
@@ -63,9 +65,9 @@ static const Layout layouts[] = {
 #define ALTKEY Mod1Mask
 
 #define TAGKEYS(KEY,TAG)												\
-	{1, {{MODKEY, KEY}},								view,           {.ui = 1 << TAG} },	\
-	{1, {{MODKEY|ControlMask, KEY}},					toggleview,     {.ui = 1 << TAG} }, \
-	{1, {{MODKEY|ShiftMask, KEY}},						tag,            {.ui = 1 << TAG} }, \
+	{1, {{MODKEY, KEY}},								            view,           {.ui = 1 << TAG} },	\
+	{1, {{MODKEY|ControlMask, KEY}},		            toggleview,     {.ui = 1 << TAG} }, \
+	{1, {{ALTKEY, KEY}},						                tag,            {.ui = 1 << TAG} }, \
 	{1, {{MODKEY|ControlMask|ShiftMask, KEY}},			toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -73,21 +75,23 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
-static const char *termcmd[]  = { "st", NULL };
-static const char *volup[]    = { "volume.sh", "up", NULL };
-static const char *voldw[]    = { "volume.sh", "down", NULL };
-static const char *browser[]    = { "brave", NULL };
-static const char *rgb_on[]   = { "xset", "led", "on", NULL };
-static const char *rgb_off[]  = { "xset", "led", "off", NULL };
+static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
+static const char *termcmd[]       = { "st", NULL };
+static const char *volup[]         = { "volume.sh", "up", NULL };
+static const char *voldw[]         = { "volume.sh", "down", NULL };
+static const char *dwm_config[]    = { "st", "-c", "dwm-config", "vim", "/home/aevim/.dwm/config.def.h", NULL };
+static const char *browser[]       = { "brave", NULL };
+static const char *rgb_on[]        = { "xset", "led", "on", NULL };
+static const char *rgb_off[]       = { "xset", "led", "off", NULL };
 
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "st", "-A", "0.6", "-t", "scratchpad", NULL};
-static const char *filemanager[] = {"f", "st", "-c", "fm", "ranger", NULL};
-static const char *cmus[] = {"c", "st", "-c", "cmus", "cmus", NULL};
-static const char *vimiv[] = {"v", "vimvi", "/hom/aevim/.web/projects/frontend-mentor/", NULL};
-static const char *dev_ch[] = {"w", "chromium", "http://127.0.0.1:8080", NULL};
-static const char *dev_fx[] = {"d", "firefox", "http://127.0.0.1:8080", NULL};
+static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
+static const char *filemanager[]   = {"f", "st", "-c", "fm", "ranger", NULL};
+static const char *cmus[]          = {"c", "st", "-c", "cmus", "cmus", NULL};
+static const char *dev_e[]         = {"st", "-c", "dev-e", "vim", "~/.web/", NULL};
+static const char *vimiv[]         = {"v", "vimvi", "/home/aevim/.web/projects/frontend-mentor/", NULL};
+static const char *dev_ch[]        = {"w", "chromium", "http://127.0.0.1:8080", NULL};
+static const char *dev_fx[]        = {"d", "firefox", "http://127.0.0.1:8080", NULL};
 
 #include "movestack.c"
 static Keychord keychords[] = {
@@ -97,6 +101,10 @@ static Keychord keychords[] = {
 	{1, {{MODKEY, XK_t}},			        spawn,          {.v = termcmd } },
 	{1, {{ALTKEY, XK_t}},			        spawn,          {.v = termcmd } },
 	{1, {{MODKEY, XK_w}},			        spawn,          {.v = browser } },
+	{1, {{MODKEY, XK_e}},			        spawn,          {.v = dev_e } },
+	{2, {{MODKEY, XK_d}, {0, XK_f}},  spawn,          {.v = dev_fx } },
+	{2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } },
+	{2, {{MODKEY, XK_c}, {0, XK_d}},  spawn,          {.v = dwm_config } },
 	{1, {{ALTKEY, XK_i}},			        spawn,          {.v = volup } },
 	{1, {{ALTKEY, XK_o}},			        spawn,          {.v = voldw } },
 	{1, {{MODKEY, XK_b}},							togglebar,      {0} },
