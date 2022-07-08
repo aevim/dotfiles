@@ -4,7 +4,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
+set encoding=utf-8
 " this if to prevent the 'O' key from having a delay "
 set ttimeoutlen=100
 
@@ -43,12 +43,13 @@ set background=dark
 colorscheme gruvbox
 
 " this will set path to the current dir.
-set path=$PWD/**
+set path+=**                                                                    
 
 " this will make tabbing on the command mode show a menu. This is usefull for find command.
 set wildmenu
 set wildmode=full
-set wildignore+=*/node_modules/*,_site
+set wildignore+=**/node_modules/** 
+
 
 " this will make so when tab hitting tab, 2 spaces will be used.
 set autoindent expandtab tabstop=2 shiftwidth=2
@@ -62,10 +63,13 @@ map <leader><space> :let @/=''<cr> " clear search
 
 " this is for fiding files "
 " it will split vertically "
-nm <leader>v :vertical sfind *
+nm <leader>v :vne **/*
 
-" it will replace the current file "
-nm <C-f> :find *
+" it will open the new file on top "
+nm <C-f> :new **/*
+
+" it will replace current file "
+nm <S-f> :find **/*
 
 " it will open new file in another tab "
 nm <leader>t :tabfind *
@@ -117,6 +121,11 @@ vnoremap " <Esc>`<i"<Esc>`>a<right>"<Esc>
 vnoremap ( <Esc>`<i(<Esc>`>a<right>)<Esc>
 vnoremap { <Esc>`<i{<Esc>`>a<right>}<Esc>
 vnoremap [ <Esc>`<i[<Esc>`>a<right>]<Esc>
+
+" some directories to jump to"
+nnoremap <leader>fp  :edit ~/.web/projects**/*
+nnoremap <leader>fh  :edit ~/**
+autocmd BufEnter * lcd %:p:h
 
 augroup numbertoggle
 autocmd!
