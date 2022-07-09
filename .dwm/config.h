@@ -1,7 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const int gappx     = 5;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -44,7 +45,7 @@ static const Rule rules[] = {
 	{ "cmus",     NULL,    NULL,        0,        1,          -1,        50,20,1200,600, 5, 'c' },
 	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,        50,20,1200,600, 5, 'v' },
 	{ NULL,     "chromium",    NULL,    0,        1,          -1,        50,20,1250,700, 5,  'w' },
-	{ NULL,     "Navigator",    NULL,   0,        1,          -1,        50,20,1250,700,  5,  'd' },
+	{ NULL,     "librewolf",    NULL,   0,        1,          -1,        50,20,1250,700,  5,  'd' },
 };
 
 /* layout(s) */
@@ -65,9 +66,9 @@ static const Layout layouts[] = {
 #define ALTKEY Mod1Mask
 
 #define TAGKEYS(KEY,TAG)												\
-	{1, {{MODKEY, KEY}},								            view,           {.ui = 1 << TAG} },	\
-	{1, {{MODKEY|ControlMask, KEY}},		            toggleview,     {.ui = 1 << TAG} }, \
-	{1, {{ALTKEY, KEY}},						                tag,            {.ui = 1 << TAG} }, \
+	{1, {{MODKEY, KEY}},								view,           {.ui = 1 << TAG} },	\
+	{1, {{MODKEY|ControlMask, KEY}},					toggleview,     {.ui = 1 << TAG} }, \
+	{1, {{MODKEY|ShiftMask, KEY}},						tag,            {.ui = 1 << TAG} }, \
 	{1, {{MODKEY|ControlMask|ShiftMask, KEY}},			toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
