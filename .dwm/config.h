@@ -8,11 +8,11 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "VictorMono:size=12" };
 static const char dmenufont[]       = "VictorMono:size=12";
-static const char bg[]              = "#282828";
-static const char bg2[]             = "#504945";
-static const char fg[]              = "#ebdbb2";
-static const char fg2[]             = "#d5c4a1";
-static const char option[]          = "#fe8019";
+static const char bg[]              = "#282a36";
+static const char bg2[]             = "#44475a";
+static const char fg[]              = "#f8f8f2";
+static const char fg2[]             = "#8be9fd";
+static const char option[]          = "#ff79c6";
 static const char *colors[][3]      = {
    /*               fg         bg         border   */
    [SchemeNorm] = { fg,        bg,       bg2 },
@@ -27,11 +27,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-  /* class | instance | title | tags mask | isfloating |  monitor | scratch key | float x,y,w,h | floatborderpx */
+  /* class | instance | title | tags mask | isfloating |  monitor | float x,y,w,h | floatborderpx | scratch key */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
-	{ "dwm-config",NULL,     NULL,       0,        1,          -1,                  50,50,1200,600,       5 },
-	//{ NULL,  "Navigator",   NULL,     1 << 0,   0,          -1,                   50,50,500,500,        5 },
-	{ "Brave-browser", NULL,   NULL,    1 << 0,   0,          -1,                   50,50,500,500,        5 },
+	{ "config",NULL,    NULL,       0,        1,          -1,                   50,50,1200,600,       5 },
+  { NULL,  "Navigator",   NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
+	{ "Brave-browser", NULL,NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Steam",    NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,       NULL,     "Steam",    1 << 4,   0,          -1,                   50,50,500,500,        5 },
@@ -40,12 +40,13 @@ static const Rule rules[] = {
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
 	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
 	{ "dev-e",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
-	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,        50,20,1200,400,     5 ,'s'},
-	{ "fm",       NULL,    NULL,        0,        1,          -1,        50,20,1200,600,  5,   'f' },
-	{ "cmus",     NULL,    NULL,        0,        1,          -1,        50,20,1200,600, 5, 'c' },
-	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,        50,20,1200,600, 5, 'v' },
-	{ NULL,     "chromium",    NULL,    0,        1,          -1,        50,20,1250,700, 5,  'w' },
-	{ NULL,     "librewolf",    NULL,   0,        1,          -1,        50,20,1250,700,  5,  'd' },
+	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,                   60,20,1200,400,       5, 's' },
+	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'f' },
+	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'c' },
+	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'v' },
+	{ "wikiman",  NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'i' },
+	{ NULL,     "chromium",    NULL,    0,        1,          -1,                   50,20,1250,700,       5, 'w' },
+	{ NULL,     "librewolf",    NULL,   0,        1,          -1,                   50,20,1250,700,       5, 'd' },
 };
 
 /* layout(s) */
@@ -80,8 +81,9 @@ static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenu
 static const char *termcmd[]       = { "st", NULL };
 static const char *volup[]         = { "volume.sh", "up", NULL };
 static const char *voldw[]         = { "volume.sh", "down", NULL };
-static const char *dwm_config[]    = { "st", "-c", "dwm-config", "vim", "/home/aevim/.dwm/config.def.h", NULL };
-static const char *browser[]       = { "brave", NULL };
+static const char *dwm_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.dwm/config.def.h", NULL };
+static const char *vim_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.vimrc", NULL };
+static const char *browser[]       = { "firefox", NULL };
 static const char *rgb_on[]        = { "xset", "led", "on", NULL };
 static const char *rgb_off[]       = { "xset", "led", "off", NULL };
 
@@ -89,10 +91,11 @@ static const char *rgb_off[]       = { "xset", "led", "off", NULL };
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
 static const char *filemanager[]   = {"f", "st", "-c", "fm", "ranger", NULL};
 static const char *cmus[]          = {"c", "st", "-c", "cmus", "cmus", NULL};
-static const char *dev_e[]         = {"st", "-c", "dev-e", "vim", "~/.web/", NULL};
+static const char *dev_e[]         = {"st","-c", "dev-e", "vim", "~/.web/", NULL};
+static const char *wikiman[]       = {"i", "st", "-c", "wikiman", "wikiman", NULL};
 static const char *vimiv[]         = {"v", "vimvi", "/home/aevim/.web/projects/frontend-mentor/", NULL};
 static const char *dev_ch[]        = {"w", "chromium", "http://127.0.0.1:8080", NULL};
-static const char *dev_fx[]        = {"d", "firefox", "http://127.0.0.1:8080", NULL};
+static const char *dev_fx[]        = {"d", "librewolf", "http://127.0.0.1:8080", NULL};
 
 #include "movestack.c"
 static Keychord keychords[] = {
@@ -106,6 +109,9 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_d}, {0, XK_f}},  spawn,          {.v = dev_fx } },
 	{2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } },
 	{2, {{MODKEY, XK_c}, {0, XK_d}},  spawn,          {.v = dwm_config } },
+	{2, {{MODKEY, XK_c}, {0, XK_v}},  spawn,          {.v = vim_config } },
+	{2, {{ALTKEY, XK_l}, {0, XK_o}},  spawn,          {.v = rgb_on } },
+	{2, {{ALTKEY, XK_l}, {0, XK_f}},  spawn,          {.v = rgb_off } },
 	{1, {{ALTKEY, XK_i}},			        spawn,          {.v = volup } },
 	{1, {{ALTKEY, XK_o}},			        spawn,          {.v = voldw } },
 	{1, {{MODKEY, XK_b}},							togglebar,      {0} },
@@ -118,6 +124,7 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_s}, {0, XK_m}},  togglescratch,  {.v = cmus } },
 	{2, {{MODKEY, XK_s}, {0, XK_f}},  togglescratch,  {.v = filemanager } },
 	{2, {{MODKEY, XK_s}, {0, XK_v}},  togglescratch,  {.v = vimiv } },
+	{2, {{MODKEY, XK_s}, {0, XK_w}},  togglescratch,  {.v = wikiman } },
 	{1, {{MODKEY, XK_d}},							incnmaster,     {.i = -1 } },
 	{1, {{MODKEY, XK_h}},							setmfact,       {.f = -0.05} },
 	{1, {{MODKEY, XK_l}},							setmfact,       {.f = +0.05} },

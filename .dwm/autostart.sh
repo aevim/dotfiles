@@ -1,11 +1,10 @@
 #!/bin/sh
-hsetroot -solid '#282828' &
+hsetroot -cover ~/.wallpaper/arch.png &
 xmodmap ~/.Xmodmap &
-xrandr --output VGA-1 --gamma 1.0:0.88:0.60 --brightness 0.95 &
+xrandr --output VGA-1 --gamma 1.0:0.88:0.90 --brightness 0.95 &
 unclutter &
-run_xidlehook &
-xcape -e 'Control_L=Escape' &
 dunst &
 safeeyes &
 xset led on &
-emacs --daemon &
+keyd-application-mapper -d
+run_xidlehook &
