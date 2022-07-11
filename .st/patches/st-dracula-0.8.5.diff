@@ -1,5 +1,6 @@
---- st/config.def.h	2022-03-09 08:28:40.186246176 -0300
-+++ config.def.h	2022-03-09 08:26:03.194323581 -0300
+diff '--color=auto' -up ../st/config.def.h ./config.def.h
+--- ../st/config.def.h	2022-03-09 08:28:40.186246176 -0300
++++ ./config.def.h	2022-03-09 08:26:03.194323581 -0300
 @@ -95,27 +95,29 @@ unsigned int tabspaces = 8;
  
  /* Terminal colors (16 first used in escape sequence) */
