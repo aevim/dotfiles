@@ -14,13 +14,6 @@ set showmatch
 " this will disable 'insert' text at the bottom "
 set noshowmode
 
-" this is for lightline to work " 
-set laststatus=2
-
-let g:lightline = {
-          \ 'colorscheme': 'gruvbox',
-      \ }
-
 " this is for the file browser "
 let g:netrw_preview   = 1
 let g:netrw_banner    = 0
@@ -39,8 +32,10 @@ set cursorline
 :highlight Cursorline cterm=bold ctermbg=black
 
 " Color scheme (terminal)
-set background=dark
-colorscheme gruvbox
+packadd! dracula
+syntax enable
+let g:dracula_colorterm = 0
+colorscheme dracula
 
 " this will set path to the current dir.
 set path+=**                                                                    
@@ -66,13 +61,18 @@ map <leader><space> :let @/=''<cr> " clear search
 nm <leader>v :vne **/*
 
 " it will open the new file on top "
-nm <C-f> :new **/*
+nm <C-p> :new **/*
 
 " it will replace current file "
-nm <S-f> :find **/*
+nm <S-p> :find **/*
 
-" it will open new file in another tab "
-nm <leader>t :tabfind *
+" search for a file in buffer "
+nm <leader>b :b *
+
+" resize vim splits window "
+nm <leader>i :res +5<cr>
+nm <leader>d :res -5<cr>
+
 
 " this will make easier to move between windows "
 nm <C-H> <C-W>h
@@ -81,6 +81,9 @@ nm <C-K> <C-W>k
 nm <C-L> <C-W>l
 
 nm <C-s> :so ~/.vimrc<cr>
+
+" this will open a terminal "
+nm <leader>t :shell<cr>
 
 " this will switch between buffers "
 nm gn :bn<cr>
@@ -100,9 +103,7 @@ inoremap [<cr> [<cr>]<c-o><s-o>
 inoremap ( ()<left>
 inoremap { {}<left>
 inoremap [ []<left>
-" # Two cases below are covered by inoremap <exp>
-" inoremap " ""<left>
-" inoremap ' ''<left>
+
 " # If you close a bracket that is already closed, it overwrites
 inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
 inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
@@ -133,3 +134,88 @@ autocmd bufenter,focusgained,insertleave,winenter * if &nu && mode() != "i" | se
 autocmd bufleave,focuslost,insertenter,winleave   * if &nu                  | set nornu | endif
 augroup end
 
+set laststatus=2
+set statusline=
+set statusline+=%2*
+set statusline+=\ 
+set statusline+=%{StatuslineMode()}
+set statusline+=\ 
+set statusline+=%1*
+set statusline+=\ 
+set statusline+=<>
+set statusline+=\ 
+set statusline+=%f
+set statusline+=\ 
+set statusline+=<>
+set statusline+=%=
+set statusline+=%m
+set statusline+=%h
+set statusline+=%r
+set statusline+=\ 
+set statusline+=%3*
+set statusline+=\ 
+set statusline+=%{b:gitbranch}
+set statusline+=%1*
+set statusline+=%4*
+set statusline+=%5*
+set statusline+=\ 
+set statusline+=%l
+set statusline+=/
+set statusline+=%L
+set statusline+=\ 
+set statusline+=%1*
+set statusline+=\ 
+set statusline+=|
+set statusline+=%y
+set statusline+=\ 
+set statusline+=%3*
+set statusline+=%4*
+set statusline+=%2*
+set statusline+=%9*
+set statusline+=%9*
+set statusline+=%9*
+hi User2 ctermbg=lightmagenta ctermfg=black guibg=lightmagenta guifg=black
+hi User1 ctermbg=black ctermfg=white guibg=darkcyan guifg=white
+hi User3 ctermbg=black ctermfg=lightblue guibg=darkcyan guifg=yellow
+hi User4 ctermbg=black ctermfg=lightgreen guibg=cyan guifg=red
+hi User5 ctermbg=cyan ctermfg=black guibg=lightmagenta guifg=black
+
+function! StatuslineMode()
+  let l:mode=mode()
+  if l:mode==#"n"
+    return "NORMAL"
+  elseif l:mode==?"v"
+    return "VISUAL"
+  elseif l:mode==#"i"
+    return "INSERT"
+  elseif l:mode==#"R"
+    return "REPLACE"
+  elseif l:mode==?"s"
+    return "SELECT"
+  elseif l:mode==#"t"
+    return "TERMINAL"
+  elseif l:mode==#"c"
+    return "COMMAND"
+  elseif l:mode==#"!"
+    return "SHELL"
+  endif
+endfunction
+
+function! StatuslineGitBranch()
+  let b:gitbranch=""
+  if &modifiable
+    try
+      let l:dir=expand('%:p:h')
+      let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
+      if !v:shell_error
+        let b:gitbranch="(".substitute(l:gitrevparse, '\n', '', 'g').") "
+      endif
+    catch
+    endtry
+  endif
+endfunction
+
+augroup GetGitBranch
+  autocmd!
+  autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
+augroup END
