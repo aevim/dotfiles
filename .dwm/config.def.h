@@ -29,7 +29,7 @@ static const Rule rules[] = {
 	 */
   /* class | instance | title | tags mask | isfloating |  monitor | float x,y,w,h | floatborderpx | scratch key */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
-	{ "config",NULL,    NULL,       0,        1,          -1,                   50,50,1200,600,       5 },
+	{ "config",   NULL,     NULL,       0,        1,          -1,                   50,50,1200,600,       5 },
   { NULL,  "Navigator",   NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Brave-browser", NULL,NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
@@ -40,13 +40,13 @@ static const Rule rules[] = {
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
 	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
 	{ "dev-e",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
-	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,                   60,20,1200,400,       5, 's' },
-	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'f' },
-	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'c' },
-	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'v' },
-	{ "wikiman",  NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'i' },
-	{ NULL,     "chromium",    NULL,    0,        1,          -1,                   50,20,1250,700,       5, 'w' },
-	{ NULL,     "librewolf",    NULL,   0,        1,          -1,                   50,20,1250,700,       5, 'd' },
+	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,                   60,30,1200,400,       5, 's' },
+	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'f' },
+	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'c' },
+	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'v' },
+	{ "wikiman",  NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'i' },
+	{ NULL,     "chromium",    NULL,    0,        1,          -1,                   50,30,1250,700,       5, 'w' },
+	{ NULL,     "librewolf",    NULL,   0,        1,          -1,                   50,30,1250,700,       5, 'd' },
 };
 
 /* layout(s) */
@@ -79,19 +79,33 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
 static const char *termcmd[]       = { "st", NULL };
+static const char *browser[]       = { "firefox", NULL };
+
+// vim to a specific page
+static const char *dev_e[]         = {"st","-c", "dev-e", "vim", "~/.web/", NULL};
+
+// to control the volume
 static const char *volup[]         = { "volume.sh", "up", NULL };
 static const char *voldw[]         = { "volume.sh", "down", NULL };
+
+// edit some configs
 static const char *dwm_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.dwm/config.def.h", NULL };
 static const char *vim_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.vimrc", NULL };
-static const char *browser[]       = { "firefox", NULL };
+
+// to ligh the keyboard rgb
 static const char *rgb_on[]        = { "xset", "led", "on", NULL };
 static const char *rgb_off[]       = { "xset", "led", "off", NULL };
+
+// cmus-remote
+static const char *cmus_play[]       = { "cmus-remote", "-p", NULL };
+static const char *cmus_stop[]       = { "cmus-remote", "-u", NULL };
+static const char *cmus_next[]       = { "cmus-remote", "-n", NULL };
+static const char *cmus_prev[]       = { "cmus-remote", "-r", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
 static const char *filemanager[]   = {"f", "st", "-c", "fm", "ranger", NULL};
 static const char *cmus[]          = {"c", "st", "-c", "cmus", "cmus", NULL};
-static const char *dev_e[]         = {"st","-c", "dev-e", "vim", "~/.web/", NULL};
 static const char *wikiman[]       = {"i", "st", "-c", "wikiman", "wikiman", NULL};
 static const char *vimiv[]         = {"v", "vimvi", "/home/aevim/.web/projects/frontend-mentor/", NULL};
 static const char *dev_ch[]        = {"w", "chromium", "http://127.0.0.1:8080", NULL};
@@ -112,6 +126,10 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_c}, {0, XK_v}},  spawn,          {.v = vim_config } },
 	{2, {{ALTKEY, XK_l}, {0, XK_o}},  spawn,          {.v = rgb_on } },
 	{2, {{ALTKEY, XK_l}, {0, XK_f}},  spawn,          {.v = rgb_off } },
+	{2, {{ALTKEY, XK_m}, {ShiftMask, XK_p}},  spawn,  {.v = cmus_play } },
+	{2, {{ALTKEY, XK_m}, {0, XK_o}},  spawn,          {.v = cmus_stop } },
+	{2, {{ALTKEY, XK_m}, {0, XK_n}},  spawn,          {.v = cmus_next } },
+	{2, {{ALTKEY, XK_m}, {0, XK_p}},  spawn,          {.v = cmus_prev } },
 	{1, {{ALTKEY, XK_i}},			        spawn,          {.v = volup } },
 	{1, {{ALTKEY, XK_o}},			        spawn,          {.v = voldw } },
 	{1, {{MODKEY, XK_b}},							togglebar,      {0} },
