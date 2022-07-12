@@ -6,8 +6,11 @@ static const int gappx     = 5;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "VictorMono:size=12" };
-static const char dmenufont[]       = "VictorMono:size=12";
+static const char *fonts[]          = { 
+                                        "JetBrainsMono Nerd Font:size:12",
+                                        "Font Awesome 6 Free Solid:size=14"
+                                      };
+static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const char bg[]              = "#282a36";
 static const char bg2[]             = "#44475a";
 static const char fg[]              = "#f8f8f2";
@@ -20,7 +23,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "▶", "", "" };
+static const char *tags[] = { "www", "dev", "videos", "books", "games" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -30,6 +33,7 @@ static const Rule rules[] = {
   /* class | instance | title | tags mask | isfloating |  monitor | float x,y,w,h | floatborderpx | scratch key */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
 	{ "config",   NULL,     NULL,       0,        1,          -1,                   50,50,1200,600,       5 },
+	{ NULL,       NULL,  "Save As",     0,        1,          -1,                   50,50,1200,400,       5 },
   { NULL,  "Navigator",   NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Brave-browser", NULL,NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
@@ -50,15 +54,15 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.70; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-  { "()",    bstack },
-	{ "()",    monocle },
+  { "",    bstack },
+	{ "",    monocle },
 	{ "><>",    NULL },    /* no layout function means floating behavior */
 };
 
@@ -91,16 +95,17 @@ static const char *voldw[]         = { "volume.sh", "down", NULL };
 // edit some configs
 static const char *dwm_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.dwm/config.def.h", NULL };
 static const char *vim_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.vimrc", NULL };
+static const char *st_config[]     = { "st", "-c", "config", "vim", "/home/aevim/.st/config.def.h", NULL };
 
 // to ligh the keyboard rgb
 static const char *rgb_on[]        = { "xset", "led", "on", NULL };
 static const char *rgb_off[]       = { "xset", "led", "off", NULL };
 
 // cmus-remote
-static const char *cmus_play[]       = { "cmus-remote", "-p", NULL };
-static const char *cmus_stop[]       = { "cmus-remote", "-u", NULL };
-static const char *cmus_next[]       = { "cmus-remote", "-n", NULL };
-static const char *cmus_prev[]       = { "cmus-remote", "-r", NULL };
+static const char *cmus_play[]     = { "cmus-remote", "-p", NULL };
+static const char *cmus_stop[]     = { "cmus-remote", "-u", NULL };
+static const char *cmus_next[]     = { "cmus-remote", "-n", NULL };
+static const char *cmus_prev[]     = { "cmus-remote", "-r", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
@@ -124,6 +129,7 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } },
 	{2, {{MODKEY, XK_c}, {0, XK_d}},  spawn,          {.v = dwm_config } },
 	{2, {{MODKEY, XK_c}, {0, XK_v}},  spawn,          {.v = vim_config } },
+	{2, {{MODKEY, XK_c}, {0, XK_s}},  spawn,          {.v = st_config } },
 	{2, {{ALTKEY, XK_l}, {0, XK_o}},  spawn,          {.v = rgb_on } },
 	{2, {{ALTKEY, XK_l}, {0, XK_f}},  spawn,          {.v = rgb_off } },
 	{2, {{ALTKEY, XK_m}, {ShiftMask, XK_p}},  spawn,  {.v = cmus_play } },
