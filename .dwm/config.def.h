@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const int gappx     = 0;                 /* gaps between windows */
+static const int gappx     = 2;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -42,13 +42,13 @@ static const Rule rules[] = {
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
 	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
 	{ "dev-e",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
-	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,                   60,30,1200,400,       5, 's' },
-	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'f' },
-	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'c' },
-	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'v' },
-	{ "wikiman",  NULL,    NULL,        0,        1,          -1,                   60,30,1200,600,       5, 'i' },
-	{ NULL,     "chromium",    NULL,    0,        1,          -1,                   50,30,1250,700,       5, 'w' },
-	{ NULL,     "librewolf",    NULL,   0,        1,          -1,                   50,30,1250,700,       5, 'd' },
+	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,                   60,20,1200,400,       5, 's' },
+	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'f' },
+	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'c' },
+	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'v' },
+	{ "wikiman",  NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'i' },
+	{ NULL,     "chromium",    NULL,    0,        1,          -1,                   50,20,1250,700,       5, 'w' },
+	{ NULL,     "librewolf",    NULL,   0,        1,          -1,                   50,20,1250,700,       5, 'd' },
 };
 
 /* layout(s) */
@@ -59,9 +59,8 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-  { "",    bstack },
-	{ "",    monocle },
-	{ "><>",    NULL },    /* no layout function means floating behavior */
+  { "| ",    bstack },
+	{ "| ",    monocle },
 };
 
 /* key definitions */
@@ -164,6 +163,10 @@ static Keychord keychords[] = {
                   XK_comma}},				tagmon,         {.i = -1 } },
 	{1, {{MODKEY|ShiftMask, 
                   XK_period}},			tagmon,         {.i = +1 } },
+  {1, {{MODKEY, XK_minus}},         setgaps,        {.i = -5 } },
+  {1, {{MODKEY, XK_equal}},         setgaps,        {.i = +5 } },
+  {1, {{MODKEY|ShiftMask, 
+         XK_equal}},                setgaps,        {.i = 0 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
