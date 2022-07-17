@@ -6,8 +6,9 @@ static const int gappx     = 0;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Font Awesome 6 Free Solid:size=12" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
+
 static const char bg[]              = "#282a36";
 static const char bg2[]             = "#44475a";
 static const char fg[]              = "#f8f8f2";
@@ -20,7 +21,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "www", "dev", "videos", "books", "games" };
+static const char *tags[] = { "", "", "", "龎", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
