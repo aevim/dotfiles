@@ -6,10 +6,7 @@ static const int gappx     = 0;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { 
-                                        "JetBrainsMono Nerd Font:size:12",
-                                        "Font Awesome 6 Free Solid:size=14"
-                                      };
+static const char *fonts[]          = { "Font Awesome 6 Free Solid:size=12" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const char bg[]              = "#282a36";
 static const char bg2[]             = "#44475a";
@@ -80,7 +77,7 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static char dmenumon[2]            = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
 static const char *termcmd[]       = { "st", NULL };
 static const char *browser[]       = { "firefox", NULL };
