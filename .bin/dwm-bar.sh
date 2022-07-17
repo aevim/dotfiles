@@ -26,36 +26,36 @@ if [[ $volume -ge 45 ]]; then
 elif [[ $volume -le 15 && $volume -gt 0 ]]; then
   status+="   $urgent $volume%"
 elif [[ $volume -eq 0 ]]; then
-  status+="   $urgent $volume%"
+  status+="   $urgent|$volume%"
 elif [[ $volume -ge 35 ]]; then
-  status+="   $alarming $volume%"
+  status+="   $alarming|$volume%"
 else
-  status+="   $normal| $volume%" 
+  status+="   $normal||$volume%" 
 fi
 
 if [[ $cpu_per_int -ge 80 ]]; then
-  status+="   $urgent $cpu_per_int%"
+  status+=" $urgent|$cpu_per_int%"
 else
-  status+="   $normal_cpu $cpu_per_int%"
+  status+=" $normal_cpu|$cpu_per_int%"
 fi
 
 if [[ $freemen_per_int -ge 70 ]]; then
-  status+="   $urgent $freemen_per_int%"
+  status+=" $urgent|$freemen_per_int%"
 elif [[ $freemen_per_int -ge 60 ]]; then
-  status+="   $alarming $freemen_per_int%"
+  status+=" $alarming|$freemen_per_int%"
 else
-  status+="   $normal_men $freemen_per_int%"
+  status+=" $normal_men|$freemen_per_int%"
 fi
 
 if [[ $(echo "$root_int < 5" | bc) -ne 0 ]]; then
   echo E
-  status+="   $alarming $root_int""g " 
+  status+=" $alarming|$root_int""g" 
 elif [[ $(echo "$root_int < 2" | bc) -ne 0 ]]; then 
-  status+="   $urgent $root_int""g " 
+  status+=" $urgent|$root_int""g" 
 else
-  status+="   $normal_root $root_int""g " 
+  status+=" $normal_root|$root_int""g" 
 fi
 
-status+="   $normal_home $home "
-status+="   $normal_date $date "
+status+=" $normal_homeﴤ|$home"
+status+=" $normal_date|$date "
 xprop -root -set WM_NAME "$status"
