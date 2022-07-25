@@ -6,6 +6,7 @@ static const int gappx     = 2;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int focusonwheel       = 0;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 
@@ -21,7 +22,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "龎", "" };
+static const char *tags[] = { "", "", "", "龎", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -31,17 +32,19 @@ static const Rule rules[] = {
   /* class | instance | title | tags mask | isfloating |  monitor | float x,y,w,h | floatborderpx | scratch key */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
 	{ "config",   NULL,     NULL,       0,        1,          -1,                   50,50,1200,600,       5 },
+	{ "steam_app_72850",    NULL, NULL, 0,        1,          -1,                   50,50,1200,600,       5 },
 	{ NULL,       NULL,  "Save As",     0,        1,          -1,                   50,50,1200,400,       5 },
-  { NULL,  "Navigator",   NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ "Brave-browser", NULL,NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,  "qutebrowser", NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
+	{ NULL,       NULL,     "st",       1 << 5,   0,          -1,                   50,50,500,500,        5 },
 	{ "Steam",    NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,       NULL,     "Steam",    1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ "Bottles",  NULL,     NULL,       1 << 4,   0,          -1,                   50,50,500,500,        5 },
 	{ "Zathura",  NULL,     NULL,       1 << 3,   0,          -1,                   50,50,500,500,        5 },
 	{ "mpv",      NULL,     NULL,       1 << 2,   0,          -1,                   50,50,500,500,        5 },
-	{ "Emacs",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
-	{ "dev-e",    NULL,     NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
+	{ NULL,  "Navigator",   NULL,       1 << 1,   0,          -1,                   50,50,500,500,        5 },
+	{ "Emacs",    NULL,     NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
+	{ "dev-e",    NULL,     NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
 	{ NULL,       NULL,   "scratchpad", 0,        1,          -1,                   60,20,1200,400,       5, 's' },
 	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'f' },
 	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'c' },
@@ -59,12 +62,12 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-  { "| ",    bstack },
+	{ "| ",    bstack },
 	{ "| ",    monocle },
 };
 
 /* key definitions */
-#define MODKEY Mod3Mask
+#define MODKEY Mod4Mask
 #define ALTKEY Mod1Mask
 
 #define TAGKEYS(KEY,TAG)												\
@@ -83,16 +86,17 @@ static const char *termcmd[]       = { "st", NULL };
 static const char *browser[]       = { "firefox", NULL };
 
 // vim to a specific page
-static const char *dev_e[]         = {"st","-c", "dev-e", "vim", "~/.web/", NULL};
+static const char *dev_e[]         = {"st","-c", "dev-e", "nvim", "/home/aevim/.web/", NULL};
+static const char *emacs[]         = {"emacsclient","-c", "-a", "'emacs'", NULL};
 
 // to control the volume
 static const char *volup[]         = { "volume.sh", "up", NULL };
 static const char *voldw[]         = { "volume.sh", "down", NULL };
 
 // edit some configs
-static const char *dwm_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.dwm/config.def.h", NULL };
-static const char *vim_config[]    = { "st", "-c", "config", "vim", "/home/aevim/.vimrc", NULL };
-static const char *st_config[]     = { "st", "-c", "config", "vim", "/home/aevim/.st/config.def.h", NULL };
+static const char *dwm_config[]    = { "st", "-c", "config", "nvim", "/home/aevim/.dwm/config.def.h", NULL };
+static const char *vim_config[]    = { "st", "-c", "config", "nvim", "/home/aevim/.vimrc", NULL };
+static const char *st_config[]     = { "st", "-c", "config", "nvim", "/home/aevim/.st/config.def.h", NULL };
 
 // to ligh the keyboard rgb
 static const char *rgb_on[]        = { "xset", "led", "on", NULL };
@@ -103,6 +107,13 @@ static const char *cmus_play[]     = { "cmus-remote", "-p", NULL };
 static const char *cmus_stop[]     = { "cmus-remote", "-u", NULL };
 static const char *cmus_next[]     = { "cmus-remote", "-n", NULL };
 static const char *cmus_prev[]     = { "cmus-remote", "-r", NULL };
+
+// pymor
+static const char *pymorStart[]    = { "pymor", "-p", "20", "-l", "3", NULL};
+static const char *pymorStop[]     = { "pymor", "-c", NULL};
+
+// dunst
+static const char *closePopUp[]    = { "dunstctl", "close-all", NULL};
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
@@ -121,7 +132,8 @@ static Keychord keychords[] = {
 	{1, {{MODKEY, XK_t}},			        spawn,          {.v = termcmd } },
 	{1, {{ALTKEY, XK_t}},			        spawn,          {.v = termcmd } },
 	{1, {{MODKEY, XK_w}},			        spawn,          {.v = browser } },
-	{1, {{MODKEY, XK_e}},			        spawn,          {.v = dev_e } },
+	{1, {{MODKEY|ShiftMask, XK_e}},		spawn,          {.v = dev_e } },
+	{1, {{MODKEY, XK_e}},			        spawn,          {.v = emacs } },
 	{2, {{MODKEY, XK_d}, {0, XK_f}},  spawn,          {.v = dev_fx } },
 	{2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } },
 	{2, {{MODKEY, XK_c}, {0, XK_d}},  spawn,          {.v = dwm_config } },
@@ -129,12 +141,14 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_c}, {0, XK_s}},  spawn,          {.v = st_config } },
 	{2, {{ALTKEY, XK_l}, {0, XK_o}},  spawn,          {.v = rgb_on } },
 	{2, {{ALTKEY, XK_l}, {0, XK_f}},  spawn,          {.v = rgb_off } },
-	{2, {{ALTKEY, XK_m}, {ShiftMask, XK_p}},  spawn,  {.v = cmus_play } },
+	{2, {{ALTKEY, XK_m}, 
+        {ShiftMask, XK_p}},         spawn,          {.v = cmus_play } },
 	{2, {{ALTKEY, XK_m}, {0, XK_o}},  spawn,          {.v = cmus_stop } },
 	{2, {{ALTKEY, XK_m}, {0, XK_n}},  spawn,          {.v = cmus_next } },
 	{2, {{ALTKEY, XK_m}, {0, XK_p}},  spawn,          {.v = cmus_prev } },
 	{1, {{ALTKEY, XK_i}},			        spawn,          {.v = volup } },
 	{1, {{ALTKEY, XK_o}},			        spawn,          {.v = voldw } },
+	{1, {{ALTKEY, XK_h}},			        spawn,          {.v = closePopUp } },
 	{1, {{MODKEY, XK_b}},							togglebar,      {0} },
 	{1, {{MODKEY, XK_j}},							focusstack,     {.i = +1 } },
 	{1, {{MODKEY, XK_k}},							focusstack,     {.i = -1 } },
@@ -146,6 +160,10 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_s}, {0, XK_f}},  togglescratch,  {.v = filemanager } },
 	{2, {{MODKEY, XK_s}, {0, XK_v}},  togglescratch,  {.v = vimiv } },
 	{2, {{MODKEY, XK_s}, {0, XK_w}},  togglescratch,  {.v = wikiman } },
+	{2, {{MODKEY|ShiftMask, XK_p}, 
+        {0, XK_s}},                 spawn,  {.v = pymorStart } },
+	{2, {{MODKEY|ShiftMask, XK_p}, 
+        {0, XK_o}},                 spawn,  {.v = pymorStop } },
 	{1, {{MODKEY, XK_d}},							incnmaster,     {.i = -1 } },
 	{1, {{MODKEY, XK_h}},							setmfact,       {.f = -0.05} },
 	{1, {{MODKEY, XK_l}},							setmfact,       {.f = +0.05} },
@@ -155,6 +173,7 @@ static Keychord keychords[] = {
 	{1, {{MODKEY, XK_space}},				  setlayout,      {0} },
 	{1, {{MODKEY|ShiftMask, 
                  XK_space}},				togglefloating, {0} },
+  {1, {{MODKEY,XK_f}},              togglefullscr,  {0} },
 	{1, {{MODKEY, XK_0}},							view,           {.ui = ~0 } },
 	{1, {{MODKEY|ShiftMask, XK_0}},		tag,            {.ui = ~0 } },
 	{1, {{MODKEY, XK_comma}},					focusmon,       {.i = -1 } },
@@ -172,7 +191,8 @@ static Keychord keychords[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	{1, {{MODKEY|ShiftMask, XK_q}},					quit,           {0} },
+	TAGKEYS(                        XK_q,                      5)
+	{1, {{MODKEY|ControlMask, XK_q}},					quit,           {0} },
 };
 
 /* button definitions */
