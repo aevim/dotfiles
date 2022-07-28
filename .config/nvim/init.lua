@@ -14,9 +14,11 @@ vim.g.mapleader = " "
 vim.cmd 'colorscheme dracula'
 vim.api.nvim_set_keymap("n", "<leader>ff", ":Telescope find_files<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope buffers<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>nn", ":NvimTreeToggle<CR>", { noremap = true })
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
+require("nvim-tree").setup()
 require('telescope').setup{
   defaults =  { file_ignore_patterns = { "node_modules" } }
 }
@@ -25,6 +27,14 @@ require('lualine').setup{
 }
 
 return require('packer').startup(function()
+  use {
+  'kyazdani42/nvim-tree.lua',
+  requires = {
+    'kyazdani42/nvim-web-devicons', -- optional, for file icons
+  },
+  tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
+
   use {
   'nvim-telescope/telescope.nvim', tag = '0.1.0',
   requires = { {'nvim-lua/plenary.nvim'} }
@@ -39,5 +49,4 @@ return require('packer').startup(function()
   requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 }
 end)
-
 
