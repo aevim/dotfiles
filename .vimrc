@@ -14,19 +14,6 @@ set showmatch
 " this will disable 'insert' text at the bottom "
 set noshowmode
 
-" this is for the file browser "
-let g:netrw_preview   = 1
-let g:netrw_banner    = 0
-let g:netrw_liststyle = 3
-let g:netrw_winsize   = 30
-nm <C-n> :Lexplore<cr>
-
-" this is emmet configuration "
-" autocmd is used to load only on specific files"
-let g:user_emmet_install_global = 0
-let g:user_emmet_leader_key=','
-autocmd FileType html,css,scss,sass EmmetInstall
-
 " highlight current line "
 set cursorline
 :highlight Cursorline cterm=bold ctermbg=black
@@ -36,15 +23,6 @@ packadd! dracula
 syntax enable
 let g:dracula_colorterm = 0
 colorscheme dracula
-
-" this will set path to the current dir.
-set path+=**                                                                    
-
-" this will make tabbing on the command mode show a menu. This is usefull for find command.
-set wildmenu
-set wildmode=full
-set wildignore+=**/node_modules/** 
-
 
 " this will make so when tab hitting tab, 2 spaces will be used.
 set autoindent expandtab tabstop=2 shiftwidth=2
@@ -104,30 +82,6 @@ inoremap ( ()<left>
 inoremap { {}<left>
 inoremap [ []<left>
 
-" # If you close a bracket that is already closed, it overwrites
-inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
-inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
-inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
-inoremap <expr> ' strpart(getline('.'), col('.')-1, 1) == "'" ? "\<Right>" : "''<left>"
-inoremap <expr> " strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"\"<left>"
-" # enclose a word in normal mode with "'({[
-nnoremap ' mmbi'<esc>ea'<esc>`m<right>
-nnoremap " mmbi"<esc>ea"<esc>`m<right>
-nnoremap ( mmbi(<esc>ea)<esc>`m<right>
-nnoremap { mmbi{<esc>ea}<esc>`m<right>
-nnoremap [ mmbi[<esc>ea]<esc>`m<right>
-" # enclose a selection in visual mode with "'({[
-vnoremap ' <Esc>`<i'<Esc>`>a<right>'<Esc>
-vnoremap " <Esc>`<i"<Esc>`>a<right>"<Esc>
-vnoremap ( <Esc>`<i(<Esc>`>a<right>)<Esc>
-vnoremap { <Esc>`<i{<Esc>`>a<right>}<Esc>
-vnoremap [ <Esc>`<i[<Esc>`>a<right>]<Esc>
-
-" some directories to jump to"
-nnoremap <leader>fp  :edit ~/.web/projects**/*
-nnoremap <leader>fh  :edit ~/**
-autocmd BufEnter * lcd %:p:h
-
 augroup numbertoggle
 autocmd!
 autocmd bufenter,focusgained,insertleave,winenter * if &nu && mode() != "i" | set rnu   | endif
@@ -154,7 +108,6 @@ set statusline+=%r
 set statusline+=\ 
 set statusline+=%3*
 set statusline+=\ 
-set statusline+=%{b:gitbranch}
 set statusline+=%1*
 set statusline+=%4*
 set statusline+=%5*
@@ -202,22 +155,3 @@ function! StatuslineMode()
     return "SHELL"
   endif
 endfunction
-
-function! StatuslineGitBranch()
-  let b:gitbranch=""
-  if &modifiable
-    try
-      let l:dir=expand('%:p:h')
-      let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
-      if !v:shell_error
-        let b:gitbranch="(".substitute(l:gitrevparse, '\n', '', 'g').") "
-      endif
-    catch
-    endtry
-  endif
-endfunction
-
-augroup GetGitBranch
-  autocmd!
-  autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
-augroup END
