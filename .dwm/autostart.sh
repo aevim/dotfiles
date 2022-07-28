@@ -7,4 +7,4 @@ dunst &
 safeeyes &
 xset led on &
 keyd-application-mapper -d
-#run_xidlehook &
+run_xidlehook &
