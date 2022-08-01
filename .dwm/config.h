@@ -10,11 +10,11 @@ static const int focusonwheel       = 0;
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 
-static const char bg[]              = "#282a36";
-static const char bg2[]             = "#44475a";
-static const char fg[]              = "#f8f8f2";
-static const char fg2[]             = "#8be9fd";
-static const char option[]          = "#ff79c6";
+static const char bg[]              = "#0f111b";
+static const char bg2[]             = "#1b1c36";
+static const char fg[]              = "#ecf0c1";
+static const char fg2[]             = "#ce6f8f";
+static const char option[]          = "#5ccc96";
 static const char *colors[][3]      = {
    /*               fg         bg         border   */
    [SchemeNorm] = { fg,        bg,       bg2 },
@@ -83,6 +83,7 @@ static const Layout layouts[] = {
 static char dmenumon[2]            = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", bg, "-nf", fg2, "-sb", bg2, "-sf", option, NULL };
 static const char *termcmd[]       = { "st", NULL };
+static const char *codeterm[]       = { "st", "-c", "dev-e", "/home/aevim/.web", NULL };
 static const char *browser[]       = { "firefox", NULL };
 
 // vim to a specific page
@@ -117,7 +118,7 @@ static const char *closePopUp[]    = { "dunstctl", "close-all", NULL};
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
-static const char *filemanager[]   = {"f", "st", "-c", "fm", "ranger", NULL};
+static const char *filemanager[]   = {"f", "st", "-c", "fm",  "sfm", NULL};
 static const char *cmus[]          = {"c", "st", "-c", "cmus", "cmus", NULL};
 static const char *wikiman[]       = {"i", "st", "-c", "wikiman", "wikiman", NULL};
 static const char *vimiv[]         = {"v", "vimvi", "/home/aevim/.web/projects/frontend-mentor/", NULL};
@@ -132,7 +133,7 @@ static Keychord keychords[] = {
 	{1, {{MODKEY, XK_t}},			        spawn,          {.v = termcmd } },
 	{1, {{ALTKEY, XK_t}},			        spawn,          {.v = termcmd } },
 	{1, {{MODKEY, XK_w}},			        spawn,          {.v = browser } },
-	{1, {{MODKEY|ShiftMask, XK_e}},		spawn,          {.v = dev_e } },
+	{1, {{MODKEY|ShiftMask, XK_e}},		spawn,          {.v = codeterm } },
 	{1, {{MODKEY, XK_e}},			        spawn,          {.v = emacs } },
 	{2, {{MODKEY, XK_d}, {0, XK_f}},  spawn,          {.v = dev_fx } },
 	{2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } },
