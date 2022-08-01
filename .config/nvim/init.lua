@@ -27,9 +27,6 @@ vim.api.nvim_set_keymap('n', '<leader>l', ':FocusSplitRight<CR>', { silent = tru
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
-require('lualine').setup{
-  options = { theme = 'spaceduck' }
-}
 
 return require('packer').startup(function()
   use {
@@ -54,8 +51,10 @@ return require('packer').startup(function()
 
   use {
   'nvim-lualine/lualine.nvim',
-  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
+  requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+  config = function() require('lualine').setup{
+    options = { theme = 'spaceduck' }
+  } end }
 
   use {'pineapplegiant/spaceduck'}
 
