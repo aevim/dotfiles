@@ -1,0 +1,13 @@
+#!/bin/sh
+
+web_search="https://duckduckgo.com/?q="
+
+keyword=$(tac ~/.cache/search_history | dmenu -l 5 -p "Search")
+
+[ "$keyword" = "" ] || echo $keyword >> ~/.cache/search_history
+
+search_engine="${keyword:0:2}"
+
+search_word=${keyword#$search_engine}
+
+surf "$web_search$keyword"

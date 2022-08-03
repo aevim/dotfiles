@@ -1,0 +1,17 @@
+#!/bin/sh
+# for lazyness, this is let me type all characters in lowercase and only the first
+# wil be uppercased
+upperCase() {
+  program=$1
+  echo "${program^}"
+}
+
+# This will assume that the default bottles name is 'games', if it's not than you 
+# got to pass it
+if [[ $# -eq 1 ]]; then
+    program=$(upperCase $1)
+    bottles-cli run -b games -p $program
+  else
+    program=$(upperCase $2)
+    bottles-cli run -b $1 -p $program
+fi

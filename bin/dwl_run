@@ -1,0 +1,2 @@
+#!/bin/bash
+'XKB_DEFAULT_LAYOUT=br(nodeadkeys)' dwl
