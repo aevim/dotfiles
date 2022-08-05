@@ -22,7 +22,7 @@ cpu_per_int=$(printf "%.0f\n" "$cpu")
 status=""
 
 if [[ $volume -ge 45 ]]; then
-  status+="   $urgent|$volume% "
+  status+="   $urgent|$volume%"
 elif [[ $volume -le 15 && $volume -gt 0 ]]; then
   status+="   $urgent $volume%"
 elif [[ $volume -eq 0 ]]; then
@@ -34,9 +34,9 @@ else
 fi
 
 if [[ $cpu_per_int -ge 80 ]]; then
-  status+=" $urgent|$cpu_per_int%"
+  status+="$urgent|$cpu_per_int%"
 else
-  status+=" $normal_cpu|$cpu_per_int%"
+  status+="$normal_cpu|$cpu_per_int%"
 fi
 
 if [[ $freemen_per_int -ge 70 ]]; then
