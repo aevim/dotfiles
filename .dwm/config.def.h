@@ -7,8 +7,8 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=12" };
-static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
+static const char *fonts[]          = { "RobotoMono Nerd Font:size=12" };
+static const char dmenufont[]       = "RobotoMono Nerd Font:size=10";
 
 static const char bg[]              = "#0f111b";
 static const char bg2[]             = "#1b1c36";
@@ -32,6 +32,7 @@ static const Rule rules[] = {
   /* class | instance | title | tags mask | isfloating |  monitor | float x,y,w,h | floatborderpx | scratch key */
 	{ "Gimp",     NULL,     NULL,       0,        1,          -1,                   50,50,500,500,        5 },
 	{ "config",   NULL,     NULL,       0,        1,          -1,                   50,50,1200,600,       5 },
+	{ "Steam",    NULL,  "Friends List",0,        1,          -1,                   50,50,1200,600,       5 },
 	{ "steam_app_72850",    NULL, NULL, 0,        1,          -1,                   50,50,1200,600,       5 },
 	{ NULL,       NULL,  "Save As",     0,        1,          -1,                   50,50,1200,400,       5 },
 	{ "Brave-browser", NULL,NULL,       1 << 0,   0,          -1,                   50,50,500,500,        5 },
@@ -49,6 +50,7 @@ static const Rule rules[] = {
 	{ "fm",       NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'f' },
 	{ "cmus",     NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'c' },
 	{ "Vimiv",    NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'v' },
+	{ "trayer",   NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'o' },
 	{ "wikiman",  NULL,    NULL,        0,        1,          -1,                   60,20,1200,600,       5, 'i' },
 	{ NULL,     "chromium",    NULL,    0,        1,          -1,                   50,20,1250,700,       5, 'w' },
 	{ NULL,     "librewolf",    NULL,   0,        1,          -1,                   50,20,1250,700,       5, 'd' },
@@ -120,8 +122,20 @@ static const char *closePopUp[]    = { "dunstctl", "close-all", NULL};
 static const char *scratchpadcmd[] = {"s", "st", "-A", "0.8", "-t", "scratchpad", NULL};
 static const char *filemanager[]   = {"f", "st", "-c", "fm",  "sfm", NULL};
 static const char *cmus[]          = {"c", "st", "-c", "cmus", "cmus", NULL};
+static const char *trayer[]        = {
+  "o", 
+  "trayer", 
+  "--transparent", "true", 
+  "--alpha", "200", 
+  "--tint", "0x282828", 
+  "--widthtype", "request", 
+  "--heighttype", "request",
+  "--padding", "4",
+  "--distance", "12",
+  NULL
+};
 static const char *wikiman[]       = {"i", "st", "-c", "wikiman", "wikiman", NULL};
-static const char *vimiv[]         = {"v", "vimvi", "/home/aevim/.web/projects/frontend-mentor/", NULL};
+static const char *vimiv[]         = {"v", "vimvi", "/home/aevim/.web/projects/", NULL};
 static const char *dev_ch[]        = {"w", "chromium", "http://127.0.0.1:8080", NULL};
 static const char *dev_fx[]        = {"d", "librewolf", "http://127.0.0.1:8080", NULL};
 
@@ -161,6 +175,7 @@ static Keychord keychords[] = {
 	{2, {{MODKEY, XK_s}, {0, XK_f}},  togglescratch,  {.v = filemanager } },
 	{2, {{MODKEY, XK_s}, {0, XK_v}},  togglescratch,  {.v = vimiv } },
 	{2, {{MODKEY, XK_s}, {0, XK_w}},  togglescratch,  {.v = wikiman } },
+	{2, {{MODKEY, XK_s}, {0, XK_t}},  togglescratch,  {.v = trayer } },
 	{2, {{MODKEY|ShiftMask, XK_p}, 
         {0, XK_s}},                 spawn,  {.v = pymorStart } },
 	{2, {{MODKEY|ShiftMask, XK_p}, 
