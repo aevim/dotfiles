@@ -132,8 +132,7 @@ static Keychord *keychords[] = {
 	/* Keys        function        argument */
 	// scratchpads
 	&((Keychord){2, {{MODKEY, XK_s}, {0, XK_u}},					togglescratch,          {.v = scratchpadcmd } }),
-	&((Keychord){1, {{MODKEY, XK_p}},							spawn,          {.v = dmenucmd } }),
-	&((Keychord){1, {{MODKEY, XK_e}},							spawn,          {.v = dmenucmd } }),
+	&((Keychord){1, {{MODKEY, XK_d}},							spawn,          {.v = dmenucmd } }),
 	&((Keychord){1, {{MODKEY, XK_t}},			spawn,          {.v = termcmd } }),
 	&((Keychord){2, {{SUPER, XK_p}, {0, XK_s}},			spawn,          {.v = pymor } }),
 	&((Keychord){2, {{SUPER, XK_p}, {0, XK_o}},			spawn,          {.v = pymorStop } }),
