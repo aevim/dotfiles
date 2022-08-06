@@ -140,8 +140,9 @@ static Keychord *keychords[] = {
 	&((Keychord){2, {{MODKEY|ShiftMask, XK_k}},      			movestack,      {.i = -1 } }),
 	&((Keychord){1, {{MODKEY, XK_e}},			        spawn,          {.v = emacs } }),
 	&((Keychord){1, {{MODKEY, XK_w}},			        spawn,          {.v = browser } }),
-	&((Keychord){2, {{MODKEY, XK_d}, {0, XK_f}},  spawn,          {.v = dev_fx } }),
-	&((Keychord){2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } }),
+	// fix the d biding
+	//&((Keychord){2, {{MODKEY, XK_d}, {0, XK_f}},  spawn,          {.v = dev_fx } }),
+	//&((Keychord){2, {{MODKEY, XK_d}, {0, XK_c}},  spawn,          {.v = dev_ch } }),
 	&((Keychord){2, {{SUPER, XK_l}, {0, XK_o}},  spawn,          {.v = rgb_on } }),
 	&((Keychord){2, {{SUPER, XK_l}, {0, XK_f}},  spawn,          {.v = rgb_off } }),
 	&((Keychord){2, {{SUPER, XK_m}, 
