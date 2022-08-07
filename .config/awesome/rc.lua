@@ -21,6 +21,7 @@ require("awful.hotkeys_popup.keys")
 local bling = require("bling")
 terminal = "st"
 icons = { "", "", "", "", "", "" }
+runner = 'dmenu_run'
 
 local term_scratch = bling.module.scratchpad {
     command = terminal .. " -A 0.6 -c spad",           -- How to spawn the scratchpad
@@ -292,8 +293,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "t", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey,           }, "w", function () awful.spawn(browser) end,
-	      {description = "open a browser", group = "launcher"}),
-
+              {description = "open a browser", group = "launcher"}),
+    awful.key({ modkey,           }, "d", function () awful.spawn(runner) end,
+              {description = "open a browser", group = "runner"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "BackSpace", awesome.quit,
