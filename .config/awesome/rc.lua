@@ -281,6 +281,8 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey,           }, "t", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey,           }, "e", function () awful.spawn(terminal .. " -c code") end,
+              {description = "open a code terminal", group = "code"}),
     awful.key({ modkey,           }, "w", function () awful.spawn(browser) end,
               {description = "open a browser", group = "launcher"}),
     awful.key({ modkey,           }, "d", function () awful.spawn(runner) end,
@@ -318,10 +320,6 @@ globalkeys = gears.table.join(
                   end
               end,
               {description = "restore minimized", group = "client"}),
-
-    -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -498,6 +496,10 @@ awful.rules.rules = {
       properties = { tag = icons[2] } },
     { rule = { class = "Steam", name = "Steam" },
       properties = { tag = icons[5] } },
+    { rule = { class = "st-256color" },
+      properties = { tag = icons[6] } },
+    { rule = { class = "code" },
+      properties = { tag = icons[1] } },
 
     -- All clients will match this rule.
     { rule = { },
