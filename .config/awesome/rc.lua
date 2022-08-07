@@ -20,6 +20,7 @@ local lain = require("lain")
 require("awful.hotkeys_popup.keys")
 local bling = require("bling")
 terminal = "st"
+icons = { "", "", "", "", "", "" }
 
 local term_scratch = bling.module.scratchpad {
     command = terminal .. " -A 0.6 -c spad",           -- How to spawn the scratchpad
@@ -184,7 +185,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
         -- Each screen has its own tag table.
-    awful.tag({ "", "", "", "", "", "6" }, s, awful.layout.layouts[12])
+    awful.tag(icons, s, awful.layout.layouts[12])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -264,9 +265,6 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
-
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
@@ -506,7 +504,10 @@ root.keys(globalkeys)
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     { rule = { class = "Firefox" },
-      properties = { tag = "2" } },
+      properties = { tag = icons[2] } },
+    { rule = { class = "Steam", name = "Steam" },
+      properties = { tag = icons[5] } },
+
     -- All clients will match this rule.
     { rule = { },
       properties = { 
