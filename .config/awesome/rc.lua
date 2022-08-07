@@ -298,7 +298,7 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    awful.key({ modkey, "Shift"   }, "BackSpace", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -452,7 +452,36 @@ globalkeys = gears.table.join(globalkeys,
                     if tag then
                        tag:view_only()
                     end
-              end)
+              end),
+      -- Toggle tag display.
+      awful.key({ modkey, "Control" }, 'q',
+                function ()
+                    local screen = awful.screen.focused()
+                    local tag = screen.tags[6]
+                    if tag then
+                       awful.tag.viewtoggle(tag)
+                    end
+                end),
+      -- Move client to tag.
+      awful.key({ modkey, "Shift" }, "q" ,
+                function ()
+                    if client.focus then
+                        local tag = client.focus.screen.tags[6]
+                        if tag then
+                            client.focus:move_to_tag(tag)
+                        end
+                   end
+                end),
+      -- Toggle tag on focused client.
+      awful.key({ modkey, "Control", "Shift" }, "q",
+                function ()
+                    if client.focus then
+                        local tag = client.focus.screen.tags[6]
+                        if tag then
+                            client.focus:toggle_tag(tag)
+                        end
+                    end
+                end)
 )
 
 clientbuttons = gears.table.join(
