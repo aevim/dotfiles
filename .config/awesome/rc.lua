@@ -20,6 +20,7 @@ require("awful.hotkeys_popup.keys")
 local bling = require("bling")
 
 terminal = "st"
+
 local term_scratch = bling.module.scratchpad {
     command = terminal .. " -A 0.6 -c spad",           -- How to spawn the scratchpad
     rule = { class = "spad" },                     -- The rule that the scratchpad will be searched by
@@ -58,7 +59,9 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+-- beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/default/theme.lua")
+beautiful.init("/home/aevim/.config/awesome/theme.lua")
+beautiful.get().wallpaper = "/home/aevim/.wallpapers/rainnight.jpg"
 beautiful.master_width_factor = 0.8
 
 -- This is used later as the default terminal and editor to run.
@@ -97,22 +100,6 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -184,7 +171,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
         -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6" }, s, awful.layout.layouts[12])
+    awful.tag({ "", "", "3", "4", "5", "6" }, s, awful.layout.layouts[12])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -203,13 +190,6 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons
     }
 
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-        screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
-    }
-
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
@@ -222,7 +202,11 @@ awful.screen.connect_for_each_screen(function(s)
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        { -- center widgets
+            layout = wibox.layout.fixed.horizontal,
+            spacing        = 10,
+            spacing_widget = wibox.widget.separator,
+        },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
@@ -469,14 +453,16 @@ awful.rules.rules = {
       properties = { tag = "2" } },
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+      properties = { 
+        border_width = beautiful.border_width,
+        border_color = beautiful.border_normal,
+        focus = awful.client.focus.filter,
+        raise = true,
+        keys = clientkeys,
+        buttons = clientbuttons,
+        screen = awful.screen.preferred,
+        placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+        size_hints_honor = false
      }
     },
 
@@ -584,4 +570,5 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
 -- }}}
