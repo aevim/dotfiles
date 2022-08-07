@@ -184,7 +184,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
         -- Each screen has its own tag table.
-    awful.tag({ "", "", "3", "4", "5", "6" }, s, awful.layout.layouts[12])
+    awful.tag({ "", "", "", "", "", "6" }, s, awful.layout.layouts[12])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -396,7 +396,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 5 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -442,6 +442,18 @@ for i = 1, 9 do
                   {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
+
+globalkeys = gears.table.join(globalkeys,
+    -- View tag only.
+    awful.key({ modkey }, 'q',
+              function ()
+                    local screen = awful.screen.focused()
+                    local tag = screen.tags[6]
+                    if tag then
+                       tag:view_only()
+                    end
+              end)
+)
 
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
