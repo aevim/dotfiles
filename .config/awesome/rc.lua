@@ -12,10 +12,19 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
+naughty.config.defaults.ontop = true
+naughty.config.defaults.timeout = 10
+naughty.config.defaults.hover_timeout = 300
+naughty.config.defaults.border_width = 0
+naughty.config.defaults.position = 'top_middle'
+naughty.config.presets.low.bg = '#cdd6f4'
+naughty.config.presets.low.fg = '#1e1e2e'
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local lain = require("lain")
+
 require("config/variables")
+require("config/mouse")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -52,40 +61,18 @@ end
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/default/theme.lua")
 beautiful.init("/home/aevim/.config/awesome/theme.lua")
-beautiful.get().wallpaper = "/home/aevim/.wallpapers/rainnight.jpg"
+beautiful.get().wallpaper = "/home/aevim/.wallpapers/arch-black-4k.png"
 beautiful.master_width_factor = 0.8
-
--- This is used later as the default terminal and editor to run.
 browser = "firefox"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
-
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
+-- mod3 is my altgr key.
 modkey = "Mod3"
 super = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -175,10 +162,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
         -- Each screen has its own tag table.
-    awful.tag(icons, s, awful.layout.layouts[12])
+    awful.tag(icons, s, awful.layout.layouts[1])
 
-    -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
@@ -223,15 +208,6 @@ awful.screen.connect_for_each_screen(function(s)
     }
 end)
 -- }}}
-
--- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
-))
--- }}}
-
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -276,9 +252,16 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ super,           }, "u", function () term_scratch:toggle() end,
+    awful.key({ super,           }, "t", function () term_scratch:toggle() end,
               {description = "open a terminal", group = "launcher"}),
-
+    awful.key({ super,           }, "g", function () awful.spawn('pymor -p 20 -l 3') end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ super,           }, "a", function () awful.spawn('volume up') end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ super,           }, "d", function () awful.spawn('volume down') end,
+              {description = "open a terminal", group = "launcher"}),
+    awful.key({ super,           }, "c", function () naughty.destroy_all_notifications() end,
+              {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey,           }, "t", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey,           }, "e", function () awful.spawn(terminal .. " -c code") end,
@@ -353,13 +336,6 @@ clientkeys = gears.table.join(
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey,           }, "n",
-        function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
-        end ,
-        {description = "minimize", group = "client"}),
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized = not c.maximized
@@ -470,7 +446,6 @@ globalkeys = gears.table.join(globalkeys,
                     end
                 end)
 )
-
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
@@ -492,7 +467,7 @@ root.keys(globalkeys)
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
-    { rule = { class = "Firefox" },
+    { rule = { class = "Firefox", class = "firefox" },
       properties = { tag = icons[2] } },
     { rule = { class = "Steam", name = "Steam" },
       properties = { tag = icons[5] } },
@@ -500,6 +475,8 @@ awful.rules.rules = {
       properties = { tag = icons[6] } },
     { rule = { class = "code" },
       properties = { tag = icons[1] } },
+    { rule = { class = "YouTube Music" },
+      properties = { tag = icons[3] } },
 
     -- All clients will match this rule.
     { rule = { },
@@ -620,5 +597,18 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+screen.connect_signal("arrange", function (s)
+    local max = s.selected_tag.layout.name == "max"
+    local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
+    -- but iterate over clients instead of tiled_clients as tiled_clients doesn't include maximized windows
+    for _, c in pairs(s.clients) do
+        if (max or only_one) and not c.floating or c.maximized then
+            c.border_width = 0
+        else
+            c.border_width = beautiful.border_width
+        end
+    end
+end)
 
 -- }}}
